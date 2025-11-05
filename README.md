@@ -1,135 +1,270 @@
-# Turborepo starter
+# BackOnline 2
 
-This Turborepo starter is maintained by the Turborepo core team.
+A modern full-stack web application built with Next.js and organized as a monorepo using Turborepo. This project features authentication, database integration, and a scalable architecture designed for rapid development.
 
-## Using this example
+## Tech Stack
 
-Run the following command:
+- **[Next.js 16](https://nextjs.org/)** - React framework for production
+- **[Turborepo](https://turbo.build/repo)** - High-performance build system for monorepos
+- **[Better Auth](https://www.better-auth.com/)** - Modern authentication library
+- **[Drizzle ORM](https://orm.drizzle.team/)** - TypeScript ORM for SQL databases
+- **[PostgreSQL 17](https://www.postgresql.org/)** - Robust relational database
+- **[pnpm](https://pnpm.io/)** - Fast, disk space efficient package manager
+- **[shadcn/ui](https://ui.shadcn.com/)** - Re-usable component library built with Radix UI and Tailwind CSS
+- **[TypeScript](https://www.typescriptlang.org/)** - Static type checking
+- **[ESLint](https://eslint.org/)** - Code linting
+- **[Prettier](https://prettier.io)** - Code formatting
 
-```sh
-npx create-turbo@latest
+## Project Structure
+
+This is a Turborepo monorepo with the following structure:
+
 ```
-
-## What's inside?
-
-This Turborepo includes the following packages/apps:
+turbo-template/
+├── apps/
+│   └── web/                 # Next.js web application
+├── packages/
+│   ├── database/            # Database schema, migrations, and auth config
+│   ├── eslint-config/       # Shared ESLint configurations
+│   └── typescript-config/   # Shared TypeScript configurations
+├── docker-compose.yml       # PostgreSQL database setup
+└── turbo.json              # Turborepo configuration
+```
 
 ### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
-- `eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `typescript-config`: `tsconfig.json`s used throughout the monorepo
+- **`apps/web`** - Main Next.js application with React 19, Tailwind CSS 4, and shadcn/ui components
+- **`packages/database`** - Centralized database package containing:
+  - Drizzle ORM configuration and schema
+  - Better Auth setup for authentication
+  - Database migration scripts
+- **`packages/eslint-config`** - Shared ESLint configurations
+- **`packages/typescript-config`** - Shared TypeScript configurations
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+Each package/app is written in TypeScript for type safety and better developer experience.
 
-### Utilities
+## Prerequisites
 
-This Turborepo has some additional tools already setup for you:
+Before you begin, ensure you have the following installed:
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+- **Node.js** >= 18.0.0
+- **pnpm** 9.0.0 or higher
+- **Docker** (for running PostgreSQL)
 
-### Build
+## Getting Started
 
-To build all apps and packages, run the following command:
+### 1. Clone the Repository
 
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+```bash
+git clone git@github.com:Kan-A-Pesh/turbo-template.git
+cd turbo-template
 ```
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+### 2. Install Dependencies
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+```bash
+pnpm install
 ```
 
-### Develop
+### 3. Environment Variables
 
-To develop all apps and packages, run the following command:
+Create a `.env` file in the root directory with the following variables:
 
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
+```env
+DATABASE_URL="postgres://postgres:postgres@localhost:5432"
+BETTER_AUTH_SECRET="your-secret-key-here"
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+> **Note:** For production, generate a secure random string for `BETTER_AUTH_SECRET`. You can use: `openssl rand -base64 32`
 
+### 4. Start the Database
+
+Start the PostgreSQL database using Docker Compose:
+
+```bash
+pnpm db:start
 ```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
+
+This will spin up a PostgreSQL 17 container on port 5432.
+
+### 5. Set Up the Database
+
+Generate and run database migrations:
+
+```bash
+# Generate migration files from schema
+pnpm db:generate
+
+# Run migrations
+pnpm db:migrate
+
+# Or push schema directly to database (for development)
+pnpm db:push
+```
+
+### 6. Generate Authentication Schema
+
+Generate the Better Auth schema:
+
+```bash
+pnpm auth:generate
+```
+
+### 7. Start Development Server
+
+```bash
+pnpm dev
+```
+
+The application will be available at [http://localhost:3000](http://localhost:3000).
+
+## Available Scripts
+
+Run these commands from the root directory:
+
+### Development
+
+- **`pnpm dev`** - Start all apps in development mode
+- **`pnpm build`** - Build all apps and packages
+- **`pnpm lint`** - Lint all packages
+- **`pnpm format`** - Format code with Prettier
+- **`pnpm types:check`** - Type-check all packages
+- **`pnpm checks`** - Run format check, type check, and lint
+
+### Database Commands
+
+- **`pnpm db:start`** - Start PostgreSQL container with Docker Compose
+- **`pnpm db:stop`** - Stop and remove PostgreSQL container and volumes
+- **`pnpm db:generate`** - Generate migration files from Drizzle schema
+- **`pnpm db:migrate`** - Run database migrations
+- **`pnpm db:push`** - Push schema changes directly to database (development)
+- **`pnpm db:check`** - Check for schema conflicts
+- **`pnpm db:studio`** - Open Drizzle Studio for database management
+
+### Authentication
+
+- **`pnpm auth:generate`** - Generate Better Auth schema files
+
+### UI Components
+
+- **`pnpm ui:add`** - Add shadcn/ui components to the web app
+
+### Turborepo Filtering
+
+You can run commands for specific packages using Turbo filters:
+
+```bash
+# Run dev only for web app
 turbo dev --filter=web
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
+# Build only the database package
+turbo build --filter=@repo/database
+
+# Lint a specific package
+turbo lint --filter=@repo/web
 ```
 
-### Remote Caching
+## Development Workflow
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+1. **Start the database**: `pnpm db:start`
+2. **Run migrations**: `pnpm db:migrate` or `pnpm db:push`
+3. **Start dev server**: `pnpm dev`
+4. **Make changes** to your code
+5. **Run checks** before committing: `pnpm checks`
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+### Working with the Database
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+- Use **Drizzle Studio** to inspect and modify database data:
+  ```bash
+  pnpm db:studio
+  ```
+- After modifying the database schema in `packages/database/schema/`:
+  1. Generate migrations: `pnpm db:generate`
+  2. Review the generated migration files
+  3. Apply migrations: `pnpm db:migrate`
 
-```
-cd my-turborepo
+### Adding UI Components
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
+To add shadcn/ui components:
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
+```bash
+pnpm ui:add
 ```
 
-## Useful Links
+This will prompt you to select components to add to your project.
 
-Learn more about the power of Turborepo:
+## Project Architecture
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+### Monorepo Benefits
+
+- **Shared Code**: Common configurations and utilities are shared across apps
+- **Atomic Changes**: Make changes across multiple packages in a single commit
+- **Optimized Builds**: Turborepo caches builds and only rebuilds what's changed
+- **Type Safety**: TypeScript types are shared across the monorepo
+
+### Database Package
+
+The `packages/database` package is a shared package that exports:
+
+- Database client and schema (`./index.ts`)
+- Better Auth server configuration (`./auth/server`)
+- Better Auth client configuration (`./auth/client`)
+
+Import these in your Next.js app:
+
+```typescript
+import { db, schema } from "@repo/database";
+import { auth } from "@repo/database/auth/server";
+```
+
+## Useful Links and Resources
+
+### Documentation
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Turborepo Documentation](https://turbo.build/repo/docs)
+- [Better Auth Documentation](https://www.better-auth.com/docs)
+- [Drizzle ORM Documentation](https://orm.drizzle.team/docs/overview)
+- [shadcn/ui Documentation](https://ui.shadcn.com/)
+- [Tailwind CSS v4 Documentation](https://tailwindcss.com/docs)
+
+### Turborepo Resources
+
+- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
+- [Filtering Workspaces](https://turbo.build/repo/docs/crafting-your-repository/running-tasks#using-filters)
+- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
+
+### Tools
+
+- [Drizzle Kit](https://orm.drizzle.team/kit-docs/overview) - Database migration toolkit
+- [Better Auth CLI](https://www.better-auth.com/docs/cli) - Authentication CLI tools
+
+## Troubleshooting
+
+### Database Connection Issues
+
+If you can't connect to the database:
+
+1. Ensure Docker is running
+2. Check if the PostgreSQL container is running: `docker ps`
+3. Verify the `DATABASE_URL` in your `.env` file
+4. Restart the database: `pnpm db:stop && pnpm db:start`
+
+### Port Conflicts
+
+If port 3000 or 5432 is already in use:
+
+- **Port 3000**: Change the dev port in `apps/web/package.json`
+- **Port 5432**: Modify the port mapping in `docker-compose.yml`
+
+### Type Errors
+
+Run type checking across all packages:
+
+```bash
+pnpm types:check
+```
+
+## License
+
+This project is private and not licensed for public use.

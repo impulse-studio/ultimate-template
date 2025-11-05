@@ -6,6 +6,11 @@ on:
       - main
       - master
       - dev
+  push:
+    branches:
+      - main
+      - master
+      - dev
 
 jobs:
   ci:
@@ -25,7 +30,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
