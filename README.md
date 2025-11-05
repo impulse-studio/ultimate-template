@@ -1,4 +1,4 @@
-# BackOnline 2
+# Turbo Template
 
 A modern full-stack web application built with Next.js and organized as a monorepo using Turborepo. This project features authentication, database integration, and a scalable architecture designed for rapid development.
 
