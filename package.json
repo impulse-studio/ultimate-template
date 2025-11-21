@@ -16,9 +16,11 @@
     "db:start": "docker compose up -d",
     "db:stop": "docker compose down -v",
     "auth:generate": "turbo run auth:generate",
-    "ui:add": "turbo run ui:add"
+    "ui:add": "turbo run ui:add",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "husky": "^9.1.7",
     "prettier": "^3.6.2",
     "turbo": "^2.6.0",
     "typescript": "5.9.2"

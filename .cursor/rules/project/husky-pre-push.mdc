@@ -1,0 +1,43 @@
+---
+description: Ensure pre-push hooks always run pnpm check through Husky
+globs: ["package.json", ".husky/**"]
+alwaysApply: false
+---
+priority: high
+version: 2025.11.21
+---
+
+# Husky Pre-Push Checks
+
+## Intent
+Every git push must run `pnpm checks` through Husky so formatting, lint, and type safety stay consistent across the monorepo.
+
+## Where It Applies
+- `package.json`
+- `.husky/pre-push`
+
+## Checklist
+1. Keep a dedicated `checks` script in `package.json` that runs the entire verification pipeline.
+2. Configure `.husky/pre-push` to source `./_/husky.sh` and execute `pnpm checks`.
+3. Avoid additional commands in the hook so pushes fail immediately when `pnpm checks` fails.
+4. Ensure the hook stays executable with `chmod +x .husky/pre-push`, relying on descriptive command names instead of comments.
+5. Update both the `checks` script and the hook whenever the verification pipeline changes so they never drift.
+
+## Examples
+
+### ✅ Good
+```bash
+#!/usr/bin/env sh
+. "$(dirname "$0")/_/husky.sh"
+
+pnpm checks
+```
+
+### ❌ Bad
+```bash
+#!/usr/bin/env sh
+. "$(dirname "$0")/_/husky.sh"
+
+pnpm lint
+```
+Push hooks must call `pnpm checks` so prettier, types, and lint run together.
