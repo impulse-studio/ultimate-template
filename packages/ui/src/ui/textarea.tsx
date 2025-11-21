@@ -60,7 +60,7 @@ const Textarea = React.forwardRef<
             "text-text-disabled-300 placeholder:text-text-disabled-300",
           ],
         ],
-        className
+        className,
       )}
       disabled={disabled}
       ref={forwardedRef}
@@ -110,7 +110,7 @@ type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> &
 const TextareaRoot = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   (
     { containerClassName, children, hasError, simple, ...rest },
-    forwardedRef
+    forwardedRef,
   ) => {
     if (simple) {
       return (
@@ -143,7 +143,7 @@ const TextareaRoot = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             // focus
             "focus-within:shadow-button-error-focus focus-within:ring-error-base",
           ],
-          containerClassName
+          containerClassName,
         )}
       >
         <div className="grid">
@@ -158,7 +158,7 @@ const TextareaRoot = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         </div>
       </div>
     );
-  }
+  },
 );
 TextareaRoot.displayName = TEXTAREA_ROOT_NAME;
 
@@ -185,7 +185,7 @@ function CharCounter({
         {
           "text-error-base": isError,
         },
-        className
+        className,
       )}
     >
       {`${current}/${max}`}

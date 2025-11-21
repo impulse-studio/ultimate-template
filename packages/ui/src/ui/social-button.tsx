@@ -205,7 +205,7 @@ const SocialButtonRoot = React.forwardRef<HTMLButtonElement, SocialButtonProps>(
       sharedProps,
       [SOCIAL_BUTTON_ICON_NAME],
       uniqueId,
-      asChild
+      asChild,
     );
 
     return (
@@ -217,7 +217,7 @@ const SocialButtonRoot = React.forwardRef<HTMLButtonElement, SocialButtonProps>(
         {extendedChildren}
       </Component>
     );
-  }
+  },
 );
 SocialButtonRoot.displayName = SOCIAL_BUTTON_ROOT_NAME;
 

@@ -35,7 +35,7 @@ const AccordionItem = React.forwardRef<
         "has-[:focus-visible]:bg-bg-weak-50 has-[:focus-visible]:ring-transparent",
         // open
         "data-[state=open]:bg-bg-weak-50 data-[state=open]:ring-transparent",
-        className
+        className,
       )}
       ref={forwardedRef}
       {...rest}
@@ -57,7 +57,7 @@ const AccordionTrigger = React.forwardRef<
         "-m-3.5 p-3.5 outline-none",
         // focus
         "focus:outline-none",
-        className
+        className,
       )}
       ref={forwardedRef}
       {...rest}
@@ -106,7 +106,7 @@ function AccordionArrow({
           "group-hover/accordion:text-text-sub-600",
           // open
           "group-data-[state=open]/accordion:hidden",
-          className
+          className,
         )}
         {...rest}
       />
@@ -115,7 +115,7 @@ function AccordionArrow({
           "size-5 text-text-sub-600",
           // close
           "hidden group-data-[state=open]/accordion:block",
-          className
+          className,
         )}
         {...rest}
       />

@@ -80,7 +80,7 @@ const ProgressCircleRoot = React.forwardRef<
       children,
       ...rest
     }: ProgressCircleRootProps,
-    forwardedRef
+    forwardedRef,
   ) => {
     const { text } = progressCircleVariants({ size });
     const { strokeWidth, radius } = getSizes({ size });
@@ -136,7 +136,7 @@ const ProgressCircleRoot = React.forwardRef<
         )}
       </div>
     );
-  }
+  },
 );
 ProgressCircleRoot.displayName = "ProgressCircleRoot";
 

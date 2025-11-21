@@ -60,7 +60,7 @@ const DigitInputSlot = React.forwardRef<
           "ring-error-base hover:ring-error-base focus:shadow-button-error-focus focus:ring-error-base":
             hasError,
         },
-        className
+        className,
       )}
       ref={forwardedRef}
       {...rest}

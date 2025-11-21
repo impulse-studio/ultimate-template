@@ -54,7 +54,7 @@ function HintRoot({
     children as React.ReactElement[],
     sharedProps,
     [HINT_ICON_NAME],
-    uniqueId
+    uniqueId,
   );
 
   return (

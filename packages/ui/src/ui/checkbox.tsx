@@ -61,7 +61,7 @@ const Checkbox = React.forwardRef<
       className={cn(
         "group/checkbox relative flex size-5 shrink-0 items-center justify-center outline-none",
         "focus:outline-none",
-        className
+        className,
       )}
       ref={forwardedRef}
       {...rest}
@@ -95,7 +95,7 @@ const Checkbox = React.forwardRef<
             "group-data-[state=indeterminate]/checkbox:fill-primary-base",
             // disabled checked
             "group-disabled/checkbox:group-data-[state=checked]/checkbox:fill-bg-soft-200",
-            "group-disabled/checkbox:group-data-[state=indeterminate]/checkbox:fill-bg-soft-200"
+            "group-disabled/checkbox:group-data-[state=indeterminate]/checkbox:fill-bg-soft-200",
           )}
           height="16"
           rx="4"
@@ -111,7 +111,7 @@ const Checkbox = React.forwardRef<
               "group-disabled/checkbox:hidden",
               // checked
               "group-data-[state=checked]/checkbox:opacity-0",
-              "group-data-[state=indeterminate]/checkbox:opacity-0"
+              "group-data-[state=indeterminate]/checkbox:opacity-0",
             )}
             height="13"
             rx="2.6"
@@ -169,7 +169,7 @@ const Checkbox = React.forwardRef<
             "group-data-[state=checked]/checkbox:[&>path]:[stroke-dashoffset:0]",
             // path
             "[&>path]:[stroke-dasharray:var(--total-length)] [&>path]:[stroke-dashoffset:var(--total-length)]",
-            "group-data-[state=indeterminate]/checkbox:invisible"
+            "group-data-[state=indeterminate]/checkbox:invisible",
           )}
           style={{
             // biome-ignore lint/suspicious/noExplicitAny: CSS custom property requires any type
@@ -184,7 +184,7 @@ const Checkbox = React.forwardRef<
             "group-data-[state=indeterminate]/checkbox:[&>path]:[stroke-dashoffset:0]",
             // path
             "[&>path]:[stroke-dasharray:var(--total-length)] [&>path]:[stroke-dashoffset:var(--total-length)]",
-            "invisible group-data-[state=indeterminate]/checkbox:visible"
+            "invisible group-data-[state=indeterminate]/checkbox:visible",
           )}
           style={{
             // biome-ignore lint/suspicious/noExplicitAny: CSS custom property requires any type

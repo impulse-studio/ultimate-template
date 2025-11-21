@@ -258,7 +258,7 @@ type ButtonRootProps = VariantProps<typeof buttonVariants> &
 const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
   (
     { children, variant, mode, size, asChild, className, ...rest },
-    forwardedRef
+    forwardedRef,
   ) => {
     const uniqueId = React.useId();
     const Component = asChild ? Slot : "button";
@@ -275,7 +275,7 @@ const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
       sharedProps,
       [BUTTON_ICON_NAME],
       uniqueId,
-      asChild
+      asChild,
     );
 
     return (
@@ -287,7 +287,7 @@ const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
         {extendedChildren}
       </Component>
     );
-  }
+  },
 );
 ButtonRoot.displayName = BUTTON_ROOT_NAME;
 

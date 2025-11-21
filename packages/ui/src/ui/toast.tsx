@@ -50,7 +50,7 @@ type PromiseReturn<T> =
 
 const promise: typeof sonnerToast.promise = <ToastData,>(
   promiseT: Parameters<typeof sonnerToast.promise<ToastData>>[0],
-  data?: Parameters<typeof sonnerToast.promise<ToastData>>[1]
+  data?: Parameters<typeof sonnerToast.promise<ToastData>>[1],
 ) => {
   const actualPromise: Promise<ToastData> =
     typeof promiseT === "function"
@@ -76,7 +76,7 @@ const promise: typeof sonnerToast.promise = <ToastData,>(
       ...defaultOptions,
       duration: Number.POSITIVE_INFINITY,
       id: toastId,
-    }
+    },
   );
 
   const wrappedId = Object.assign(toastId, {
@@ -108,7 +108,7 @@ const promise: typeof sonnerToast.promise = <ToastData,>(
           ...defaultOptions,
           id: toastId,
           duration: 4000,
-        }
+        },
       );
     })
     .catch((error) => {
@@ -135,7 +135,7 @@ const promise: typeof sonnerToast.promise = <ToastData,>(
           ...defaultOptions,
           id: toastId,
           duration: 4000,
-        }
+        },
       );
     });
 
@@ -160,23 +160,23 @@ const Toaster = ConfiguredToaster;
 type ToastOverrides = {
   success: (
     message: Parameters<typeof sonnerToast.success>[0],
-    opts?: Parameters<typeof sonnerToast.success>[1]
+    opts?: Parameters<typeof sonnerToast.success>[1],
   ) => string | number;
   error: (
     message: Parameters<typeof sonnerToast.error>[0],
-    opts?: Parameters<typeof sonnerToast.error>[1]
+    opts?: Parameters<typeof sonnerToast.error>[1],
   ) => string | number;
   warning: (
     message: Parameters<typeof sonnerToast.warning>[0],
-    opts?: Parameters<typeof sonnerToast.warning>[1]
+    opts?: Parameters<typeof sonnerToast.warning>[1],
   ) => string | number;
   info: (
     message: Parameters<typeof sonnerToast.info>[0],
-    opts?: Parameters<typeof sonnerToast.info>[1]
+    opts?: Parameters<typeof sonnerToast.info>[1],
   ) => string | number;
   information: (
     message: Parameters<typeof sonnerToast.info>[0],
-    opts?: Parameters<typeof sonnerToast.info>[1]
+    opts?: Parameters<typeof sonnerToast.info>[1],
   ) => string | number;
   promise: typeof promise;
 };
@@ -200,7 +200,7 @@ toast.success = (message, opts) =>
         variant="lighter"
       />
     ),
-    { ...defaultOptions, ...opts }
+    { ...defaultOptions, ...opts },
   );
 
 toast.error = (message, opts) =>
@@ -213,7 +213,7 @@ toast.error = (message, opts) =>
         variant="lighter"
       />
     ),
-    { ...defaultOptions, ...opts }
+    { ...defaultOptions, ...opts },
   );
 
 toast.warning = (message, opts) =>
@@ -226,7 +226,7 @@ toast.warning = (message, opts) =>
         variant="lighter"
       />
     ),
-    { ...defaultOptions, ...opts }
+    { ...defaultOptions, ...opts },
   );
 
 toast.info = (message, opts) =>
@@ -239,7 +239,7 @@ toast.info = (message, opts) =>
         variant="lighter"
       />
     ),
-    { ...defaultOptions, ...opts }
+    { ...defaultOptions, ...opts },
   );
 
 toast.information = (message, opts) => toast.info(message, opts);

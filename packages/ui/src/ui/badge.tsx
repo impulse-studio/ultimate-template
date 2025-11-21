@@ -429,7 +429,7 @@ const BadgeRoot = React.forwardRef<HTMLDivElement, BadgeRootProps>(
       className,
       ...rest
     },
-    forwardedRef
+    forwardedRef,
   ) => {
     const uniqueId = React.useId();
     const Component = asChild ? Slot : "div";
@@ -452,7 +452,7 @@ const BadgeRoot = React.forwardRef<HTMLDivElement, BadgeRootProps>(
       sharedProps,
       [BADGE_ICON_NAME, BADGE_DOT_NAME],
       uniqueId,
-      asChild
+      asChild,
     );
 
     return (
@@ -464,7 +464,7 @@ const BadgeRoot = React.forwardRef<HTMLDivElement, BadgeRootProps>(
         {extendedChildren}
       </Component>
     );
-  }
+  },
 );
 BadgeRoot.displayName = BADGE_ROOT_NAME;
 

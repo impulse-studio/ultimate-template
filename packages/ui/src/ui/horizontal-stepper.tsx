@@ -111,7 +111,7 @@ const HorizontalStepperItem = React.forwardRef<
     sharedProps,
     [HORIZONTAL_STEPPER_ITEM_INDICATOR_NAME],
     uniqueId,
-    asChild
+    asChild,
   );
 
   return (

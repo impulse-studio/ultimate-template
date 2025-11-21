@@ -151,7 +151,7 @@ const AvatarRoot = React.forwardRef<HTMLDivElement, AvatarRootProps>(
       placeholderType = "user",
       ...rest
     },
-    forwardedRef
+    forwardedRef,
   ) => {
     const uniqueId = React.useId();
     const Component = asChild ? Slot : "div";
@@ -182,7 +182,7 @@ const AvatarRoot = React.forwardRef<HTMLDivElement, AvatarRootProps>(
       sharedProps,
       [AVATAR_IMAGE_NAME, AVATAR_INDICATOR_NAME],
       uniqueId,
-      asChild
+      asChild,
     );
 
     return (
@@ -194,7 +194,7 @@ const AvatarRoot = React.forwardRef<HTMLDivElement, AvatarRootProps>(
         {extendedChildren}
       </Component>
     );
-  }
+  },
 );
 AvatarRoot.displayName = AVATAR_ROOT_NAME;
 
@@ -215,7 +215,7 @@ const AvatarImage = React.forwardRef<HTMLImageElement, AvatarImageProps>(
         {...rest}
       />
     );
-  }
+  },
 );
 AvatarImage.displayName = AVATAR_IMAGE_NAME;
 
@@ -287,7 +287,7 @@ const AvatarBrandLogo = React.forwardRef<
     <Component
       className={cn(
         "box-content size-6 rounded-full border-2 border-bg-white-0",
-        className
+        className,
       )}
       ref={forwardedRef}
       {...rest}
@@ -304,7 +304,7 @@ function AvatarNotification({
     <div
       className={cn(
         "box-content size-3 rounded-full border-2 border-bg-white-0 bg-error-base",
-        className
+        className,
       )}
       {...rest}
     />

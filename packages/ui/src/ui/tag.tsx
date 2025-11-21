@@ -84,7 +84,7 @@ type TagProps = VariantProps<typeof tagVariants> &
 const TagRoot = React.forwardRef<HTMLDivElement, TagProps>(
   (
     { asChild, children, variant, disabled, className, ...rest },
-    forwardedRef
+    forwardedRef,
   ) => {
     const uniqueId = React.useId();
     const Component = asChild ? Slot : "div";
@@ -100,7 +100,7 @@ const TagRoot = React.forwardRef<HTMLDivElement, TagProps>(
       sharedProps,
       [TAG_ICON_NAME, TAG_DISMISS_BUTTON_NAME, TAG_DISMISS_ICON_NAME],
       uniqueId,
-      asChild
+      asChild,
     );
 
     return (
@@ -113,7 +113,7 @@ const TagRoot = React.forwardRef<HTMLDivElement, TagProps>(
         {extendedChildren}
       </Component>
     );
-  }
+  },
 );
 TagRoot.displayName = TAG_ROOT_NAME;
 
@@ -142,7 +142,7 @@ const TagDismissButton = React.forwardRef<
 >(
   (
     { asChild, children, className, variant, disabled, ...rest },
-    forwardedRef
+    forwardedRef,
   ) => {
     const Component = asChild ? Slot : "button";
     const { dismissButton } = tagVariants({ variant, disabled });
@@ -162,7 +162,7 @@ const TagDismissButton = React.forwardRef<
         )}
       </Component>
     );
-  }
+  },
 );
 TagDismissButton.displayName = TAG_DISMISS_BUTTON_NAME;
 

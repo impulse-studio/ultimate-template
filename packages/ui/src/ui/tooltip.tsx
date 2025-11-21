@@ -90,7 +90,7 @@ const TooltipContent = React.forwardRef<
 >(
   (
     { size, variant, className, children, sideOffset = 4, ...rest },
-    forwardedRef
+    forwardedRef,
   ) => {
     const { content, arrow } = tooltipVariants({
       size,
@@ -112,7 +112,7 @@ const TooltipContent = React.forwardRef<
         </TooltipPrimitive.Content>
       </TooltipPrimitive.Portal>
     );
-  }
+  },
 );
 TooltipContent.displayName = TooltipPrimitive.Content.displayName;
 

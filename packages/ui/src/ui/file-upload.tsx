@@ -25,13 +25,13 @@ const FileUpload = React.forwardRef<HTMLLabelElement, FileUploadRootProps>(
           "hover:bg-bg-weak-50",
           // drag active
           isDragActive && "bg-bg-weak-50",
-          className
+          className,
         )}
         ref={forwardedRef}
         {...rest}
       />
     );
-  }
+  },
 );
 FileUpload.displayName = "FileUpload";
 
@@ -48,7 +48,7 @@ const FileUploadButton = React.forwardRef<
       className={cn(
         "inline-flex h-8 items-center justify-center gap-2.5 whitespace-nowrap rounded-lg bg-bg-white-0 px-2.5 text-label-sm text-text-sub-600",
         "pointer-events-none ring-1 ring-stroke-soft-200 ring-inset",
-        className
+        className,
       )}
       ref={forwardedRef}
       {...rest}

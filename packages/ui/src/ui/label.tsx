@@ -21,7 +21,7 @@ const LabelRoot = React.forwardRef<
         "flex items-center gap-px",
         // disabled
         "aria-disabled:text-text-disabled-300",
-        className
+        className,
       )}
       ref={forwardedRef}
       {...rest}
@@ -41,7 +41,7 @@ function LabelAsterisk({
         "text-primary-base",
         // disabled
         "group-aria-disabled:text-text-disabled-300",
-        className
+        className,
       )}
       {...rest}
     >
@@ -61,7 +61,7 @@ function LabelSub({
         "text-paragraph-sm text-text-sub-600",
         // disabled
         "group-aria-disabled:text-text-disabled-300",
-        className
+        className,
       )}
       {...rest}
     >

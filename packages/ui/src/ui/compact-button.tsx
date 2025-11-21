@@ -99,7 +99,7 @@ const CompactButtonRoot = React.forwardRef<
 >(
   (
     { asChild, variant, size, fullRadius, children, className, ...rest },
-    forwardedRef
+    forwardedRef,
   ) => {
     const uniqueId = React.useId();
     const Component = asChild ? Slot : "button";
@@ -115,7 +115,7 @@ const CompactButtonRoot = React.forwardRef<
       sharedProps,
       [COMPACT_BUTTON_ICON_NAME],
       uniqueId,
-      asChild
+      asChild,
     );
 
     return (
@@ -127,7 +127,7 @@ const CompactButtonRoot = React.forwardRef<
         {extendedChildren}
       </Component>
     );
-  }
+  },
 );
 CompactButtonRoot.displayName = COMPACT_BUTTON_ROOT_NAME;
 

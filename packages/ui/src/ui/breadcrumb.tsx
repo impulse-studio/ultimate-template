@@ -54,7 +54,7 @@ const BreadcrumbItem = React.forwardRef<HTMLDivElement, BreadcrumbItemProps>(
             // active
             "text-text-strong-950": active,
           },
-          className
+          className,
         )}
         ref={forwardedRef}
         {...rest}
@@ -62,7 +62,7 @@ const BreadcrumbItem = React.forwardRef<HTMLDivElement, BreadcrumbItemProps>(
         {children}
       </Component>
     );
-  }
+  },
 );
 BreadcrumbItem.displayName = BREADCRUMB_ITEM_NAME;
 
@@ -88,7 +88,7 @@ function BreadcrumbItemArrowIcon<T extends React.ElementType>({
     <Component
       className={cn(
         "flex size-5 select-none items-center justify-center text-text-disabled-300",
-        className
+        className,
       )}
       {...rest}
     />

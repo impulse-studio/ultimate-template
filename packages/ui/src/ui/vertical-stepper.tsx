@@ -105,7 +105,7 @@ const VerticalStepperItem = React.forwardRef<
     sharedProps,
     [VERTICAL_STEPPER_ITEM_INDICATOR_NAME],
     uniqueId,
-    asChild
+    asChild,
   );
 
   return (

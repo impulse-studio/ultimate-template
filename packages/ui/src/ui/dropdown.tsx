@@ -35,7 +35,7 @@ const DropdownMenuContent = React.forwardRef<
         "data-[state=closed]:fade-out-0 data-[state=closed]:animate-out",
         "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
         "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-        className
+        className,
       )}
       ref={forwardedRef}
       sideOffset={sideOffset}
@@ -64,7 +64,7 @@ const DropdownMenuItem = React.forwardRef<
       // disabled
       "data-[disabled]:text-text-disabled-300",
       inset && "pl-9",
-      className
+      className,
     )}
     ref={forwardedRef}
     {...rest}
@@ -86,7 +86,7 @@ function DropdownItemIcon<T extends React.ElementType>({
         "size-5 text-text-sub-600",
         // disabled
         "group-has-[[data-disabled]]:text-text-disabled-300",
-        className
+        className,
       )}
       {...rest}
     />
@@ -113,7 +113,7 @@ const DropdownMenuLabel = React.forwardRef<
   <DropdownMenuPrimitive.Label
     className={cn(
       "px-2 py-1 text-subheading-xs text-text-soft-400 uppercase",
-      className
+      className,
     )}
     ref={forwardedRef}
     {...rest}
@@ -138,7 +138,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
       // disabled
       "data-[disabled]:text-text-disabled-300",
       inset && "pl-9",
-      className
+      className,
     )}
     ref={forwardedRef}
     {...rest}
@@ -163,7 +163,7 @@ const DropdownMenuSubContent = React.forwardRef<
       "data-[state=closed]:fade-out-0 data-[state=closed]:animate-out",
       "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
       "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-      className
+      className,
     )}
     ref={forwardedRef}
     {...rest}

@@ -63,7 +63,7 @@ function Calendar({
           // start
           "[&:has(.day-range-start)]:before:block [&:has(.day-range-start)]:before:w-3",
           // end
-          "[&:has(.day-range-end):not(:first-child)]:before:!block [&:has(.day-range-end)]:before:right-auto [&:has(.day-range-end)]:before:left-0"
+          "[&:has(.day-range-end):not(:first-child)]:before:!block [&:has(.day-range-end)]:before:right-auto [&:has(.day-range-end)]:before:left-0",
         ),
         day: clsx(
           // base
@@ -74,7 +74,7 @@ function Calendar({
           // selected
           "aria-[selected]:bg-primary-base aria-[selected]:text-static-white",
           // focus visible
-          "focus:outline-none focus-visible:bg-bg-weak-50 focus-visible:text-text-strong-950"
+          "focus:outline-none focus-visible:bg-bg-weak-50 focus-visible:text-text-strong-950",
         ),
         day_range_start: "day-range-start",
         day_range_end: "day-range-end",

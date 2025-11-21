@@ -55,7 +55,7 @@ const TabMenuVerticalTrigger = React.forwardRef<
         "focus:outline-none",
         // active
         "data-[state=active]:bg-bg-weak-50 data-[state=active]:text-text-strong-950",
-        className
+        className,
       )}
       ref={forwardedRef}
       {...rest}
@@ -79,7 +79,7 @@ function TabMenuVerticalIcon<T extends React.ElementType>({
         "transition duration-200 ease-out",
         // active
         "group-data-[state=active]/tab-item:text-primary-base",
-        className
+        className,
       )}
       {...rest}
     />
@@ -103,7 +103,7 @@ function TabMenuVerticalArrowIcon<T extends React.ElementType>({
         "scale-75 transition ease-out",
         // active
         "group-data-[state=active]/tab-item:scale-100 group-data-[state=active]/tab-item:opacity-100",
-        className
+        className,
       )}
       {...rest}
     />

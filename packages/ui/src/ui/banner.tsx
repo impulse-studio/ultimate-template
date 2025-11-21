@@ -252,7 +252,7 @@ function Banner({
     children as React.ReactElement[],
     sharedProps,
     [BANNER_ICON_NAME, BANNER_CLOSE_BUTTON_NAME],
-    uniqueId
+    uniqueId,
   );
 
   return (
@@ -300,7 +300,7 @@ const BannerCloseButton = React.forwardRef<
 >(
   (
     { asChild, children, variant, status, className, ...rest },
-    forwardedRef
+    forwardedRef,
   ) => {
     const Component = asChild ? Slot : "button";
     const { closeButton } = bannerVariants({ variant, status });
@@ -314,7 +314,7 @@ const BannerCloseButton = React.forwardRef<
         {children}
       </Component>
     );
-  }
+  },
 );
 BannerCloseButton.displayName = BANNER_CLOSE_BUTTON_NAME;
 

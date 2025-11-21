@@ -34,7 +34,7 @@ const AlertToast = React.forwardRef<
       dismissable = true,
       icon,
     },
-    forwardedRef
+    forwardedRef,
   ) => {
     let Icon: React.ElementType;
 
@@ -80,7 +80,7 @@ const AlertToast = React.forwardRef<
         )}
       </Alert.Root>
     );
-  }
+  },
 );
 AlertToast.displayName = "AlertToast";
 

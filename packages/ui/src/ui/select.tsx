@@ -317,7 +317,7 @@ const SelectContent = React.forwardRef<
       collisionPadding = 8,
       ...rest
     },
-    forwardedRef
+    forwardedRef,
   ) => (
     <SelectPrimitives.Portal>
       <SelectPrimitives.Content
@@ -333,7 +333,7 @@ const SelectContent = React.forwardRef<
           "data-[state=closed]:fade-out-0 data-[state=closed]:animate-out",
           "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
           "data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2",
-          className
+          className,
         )}
         collisionPadding={collisionPadding}
         position={position}
@@ -356,7 +356,7 @@ const SelectContent = React.forwardRef<
         </ScrollAreaPrimitives.Root>
       </SelectPrimitives.Content>
     </SelectPrimitives.Portal>
-  )
+  ),
 );
 
 SelectContent.displayName = "SelectContent";
@@ -380,7 +380,7 @@ const SelectItem = React.forwardRef<
         {
           "gap-1.5 pr-[34px]": size === "xsmall",
         },
-        className
+        className,
       )}
       ref={forwardedRef}
       {...rest}
@@ -394,7 +394,7 @@ const SelectItem = React.forwardRef<
             "group-disabled:text-text-disabled-300",
             {
               "gap-1.5": size === "xsmall",
-            }
+            },
           )}
         >
           {typeof children === "string" ? (

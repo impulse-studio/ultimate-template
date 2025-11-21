@@ -32,7 +32,7 @@ const DrawerOverlay = React.forwardRef<
         "fixed inset-0 z-50 grid grid-cols-1 place-items-end overflow-hidden bg-overlay backdrop-blur-[10px]",
         // animation
         "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=open]:animate-in",
-        className
+        className,
       )}
       ref={forwardedRef}
       {...rest}
@@ -58,7 +58,7 @@ const DrawerContent = React.forwardRef<
             "data-[state=closed]:animate-out data-[state=closed]:duration-200 data-[state=closed]:ease-in",
             "data-[state=open]:slide-in-from-right-full",
             "data-[state=closed]:slide-out-to-right-full",
-            className
+            className,
           )}
           ref={forwardedRef}
           {...rest}
@@ -83,7 +83,7 @@ function DrawerHeader({
     <div
       className={cn(
         "flex items-center gap-3 border-stroke-soft-200 p-5",
-        className
+        className,
       )}
       {...rest}
     >
@@ -136,7 +136,7 @@ function DrawerFooter({
     <div
       className={cn(
         "flex items-center gap-4 border-stroke-soft-200 p-5",
-        className
+        className,
       )}
       {...rest}
     />

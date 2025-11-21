@@ -32,7 +32,7 @@ const SegmentedControlList = React.forwardRef<
     <TabsPrimitive.List
       className={cn(
         "relative isolate grid w-full auto-cols-fr grid-flow-col gap-1 rounded-10 bg-bg-weak-50 p-1",
-        className
+        className,
       )}
       ref={mergeRefs(forwardedRef, listRef)}
       {...rest}
@@ -47,7 +47,7 @@ const SegmentedControlList = React.forwardRef<
           {
             hidden: !mounted,
           },
-          floatingBgClassName
+          floatingBgClassName,
         )}
         style={{
           transform: `translate3d(${lineStyle.left}px, 0, 0)`,
@@ -76,7 +76,7 @@ const SegmentedControlTrigger = React.forwardRef<
         "focus:outline-none",
         // active
         "data-[state=active]:text-text-strong-950",
-        className
+        className,
       )}
       ref={forwardedRef}
       {...rest}

@@ -44,7 +44,7 @@ const Toaster = React.forwardRef<HTMLDivElement, ToasterProps>(
         {...rest}
       />
     );
-  }
+  },
 );
 
 Toaster.displayName = "Toaster";

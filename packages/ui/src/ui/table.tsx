@@ -33,7 +33,7 @@ const TableHead = React.forwardRef<
     <th
       className={cn(
         "bg-bg-weak-50 px-3 py-2 text-left text-paragraph-sm text-text-sub-600 first:rounded-l-lg last:rounded-r-lg",
-        className
+        className,
       )}
       ref={forwardedRef}
       {...rest}
@@ -104,7 +104,7 @@ const TableCell = React.forwardRef<
     <td
       className={cn(
         "h-16 px-3 transition duration-200 ease-out first:rounded-l-xl last:rounded-r-xl group-hover/row:bg-bg-weak-50",
-        className
+        className,
       )}
       ref={forwardedRef}
       {...rest}

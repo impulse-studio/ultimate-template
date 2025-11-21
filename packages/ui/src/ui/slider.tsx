@@ -15,7 +15,7 @@ const SliderRoot = React.forwardRef<
   <SliderPrimitive.Root
     className={cn(
       "relative flex h-4 w-full touch-none select-none items-center",
-      className
+      className,
     )}
     ref={forwardedRef}
     {...rest}
@@ -41,7 +41,7 @@ const SliderThumb = React.forwardRef<
           // focus
           "focus:outline-none",
         ],
-        className
+        className,
       )}
       ref={forwardedRef}
       {...rest}

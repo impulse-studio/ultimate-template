@@ -99,7 +99,7 @@ const ButtonGroupRoot = React.forwardRef<HTMLDivElement, ButtonGroupRootProps>(
       sharedProps,
       [BUTTON_GROUP_ITEM_NAME, BUTTON_GROUP_ICON_NAME],
       uniqueId,
-      asChild
+      asChild,
     );
 
     return (
@@ -111,7 +111,7 @@ const ButtonGroupRoot = React.forwardRef<HTMLDivElement, ButtonGroupRootProps>(
         {extendedChildren}
       </Component>
     );
-  }
+  },
 );
 ButtonGroupRoot.displayName = BUTTON_GROUP_ROOT_NAME;
 

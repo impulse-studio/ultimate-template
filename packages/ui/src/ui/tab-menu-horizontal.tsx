@@ -60,14 +60,14 @@ const TabMenuHorizontalList = React.forwardRef<
     <div
       className={cn(
         "scrollbar-hide relative grid overflow-x-auto overflow-y-hidden overscroll-contain",
-        wrapperClassName
+        wrapperClassName,
       )}
       ref={listWrapperRef}
     >
       <TabsPrimitive.List
         className={cn(
           "group/tab-list relative flex h-12 items-center gap-6 whitespace-nowrap border-stroke-soft-200 border-y",
-          className
+          className,
         )}
         ref={mergeRefs(forwardedRef, listRef)}
         {...rest}
@@ -81,7 +81,7 @@ const TabMenuHorizontalList = React.forwardRef<
             "-bottom-px absolute left-0 h-0.5 bg-primary-base opacity-0 transition-all duration-300 group-has-[[data-state=active]]/tab-list:opacity-100",
             {
               hidden: !mounted,
-            }
+            },
           )}
           style={{
             transform: `translate3d(${lineStyle.left}px, 0, 0)`,
@@ -110,7 +110,7 @@ const TabMenuHorizontalTrigger = React.forwardRef<
         "focus:outline-none",
         // active
         "data-[state=active]:text-text-strong-950",
-        className
+        className,
       )}
       ref={forwardedRef}
       {...rest}
@@ -134,7 +134,7 @@ function TabMenuHorizontalIcon<T extends React.ElementType>({
         "transition duration-200 ease-out",
         // active
         "group-data-[state=active]/tab-item:text-primary-base",
-        className
+        className,
       )}
       {...rest}
     />

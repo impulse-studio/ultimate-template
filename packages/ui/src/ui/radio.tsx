@@ -18,7 +18,7 @@ const RadioGroupItem = React.forwardRef<
     <RadioGroupPrimitive.Item
       className={cn(
         "group/radio relative size-5 shrink-0 outline-none focus:outline-none",
-        className
+        className,
       )}
       ref={forwardedRef}
       {...rest}
@@ -44,7 +44,7 @@ const RadioGroupItem = React.forwardRef<
             // disabled
             "group-disabled/radio:fill-bg-soft-200",
             // disabled chcked
-            "group-data-[state=checked]/radio:fill-bg-white-0"
+            "group-data-[state=checked]/radio:fill-bg-white-0",
           )}
           cx="10"
           cy="10"
@@ -55,7 +55,7 @@ const RadioGroupItem = React.forwardRef<
             className={cn(
               "fill-bg-white-0",
               // disabled
-              "group-disabled/radio:hidden"
+              "group-disabled/radio:hidden",
             )}
             cx="10"
             cy="10"
@@ -118,7 +118,7 @@ const RadioGroupItem = React.forwardRef<
               // focus
               "group-focus/radio:stroke-primary-dark",
               // disabled
-              "group-disabled/radio:stroke-bg-soft-200"
+              "group-disabled/radio:stroke-bg-soft-200",
             )}
             cx="10"
             cy="10"

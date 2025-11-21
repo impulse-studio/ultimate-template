@@ -187,7 +187,7 @@ function InputRoot({
       INPUT_INLINE_AFFIX_NAME,
     ],
     uniqueId,
-    asChild
+    asChild,
   );
 
   return (
@@ -233,7 +233,7 @@ const Input = React.forwardRef<
 >(
   (
     { className, type = "text", size, hasError, asChild, ...rest },
-    forwardedRef
+    forwardedRef,
   ) => {
     const Component = asChild ? Slot : "input";
 
@@ -250,7 +250,7 @@ const Input = React.forwardRef<
         {...rest}
       />
     );
-  }
+  },
 );
 Input.displayName = INPUT_EL_NAME;
 

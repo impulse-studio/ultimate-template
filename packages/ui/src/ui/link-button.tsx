@@ -89,7 +89,7 @@ type LinkButtonProps = VariantProps<typeof linkButtonVariants> &
 const LinkButtonRoot = React.forwardRef<HTMLButtonElement, LinkButtonProps>(
   (
     { asChild, children, variant, size, underline, className, ...rest },
-    forwardedRef
+    forwardedRef,
   ) => {
     const uniqueId = React.useId();
     const Component = asChild ? Slot : "button";
@@ -105,7 +105,7 @@ const LinkButtonRoot = React.forwardRef<HTMLButtonElement, LinkButtonProps>(
       sharedProps,
       [LINK_BUTTON_ICON_NAME],
       uniqueId,
-      asChild
+      asChild,
     );
 
     return (
@@ -117,7 +117,7 @@ const LinkButtonRoot = React.forwardRef<HTMLButtonElement, LinkButtonProps>(
         {extendedChildren}
       </Component>
     );
-  }
+  },
 );
 LinkButtonRoot.displayName = LINK_BUTTON_ROOT_NAME;
 

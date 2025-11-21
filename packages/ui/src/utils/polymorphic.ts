@@ -11,7 +11,7 @@ type PolymorphicComponentProp<
   Omit<React.ComponentPropsWithoutRef<T>, PropsToOmit<T, Props>>;
 
 export type PolymorphicRef<T extends React.ElementType> =
-  React.ComponentPropsWithRef<T>['ref'];
+  React.ComponentPropsWithRef<T>["ref"];
 
 type PolymorphicComponentPropWithRef<
   T extends React.ElementType,

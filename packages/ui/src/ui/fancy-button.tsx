@@ -108,7 +108,7 @@ const FancyButtonRoot = React.forwardRef<HTMLButtonElement, FancyButtonProps>(
       sharedProps,
       [FANCY_BUTTON_ICON_NAME],
       uniqueId,
-      asChild
+      asChild,
     );
 
     return (
@@ -120,7 +120,7 @@ const FancyButtonRoot = React.forwardRef<HTMLButtonElement, FancyButtonProps>(
         {extendedChildren}
       </Component>
     );
-  }
+  },
 );
 FancyButtonRoot.displayName = FANCY_BUTTON_ROOT_NAME;
 

@@ -23,7 +23,7 @@ const NotificationViewport = React.forwardRef<
   <NotificationPrimitives.Viewport
     className={cn(
       "fixed top-0 left-0 z-[100] flex max-h-screen w-full flex-col-reverse gap-5 p-4 sm:top-auto sm:right-0 sm:bottom-0 sm:left-auto sm:max-w-[438px] sm:flex-col sm:p-6",
-      className
+      className,
     )}
     ref={forwardedRef}
     {...rest}
@@ -59,7 +59,7 @@ const Notification = React.forwardRef<
       disableDismiss = false,
       ...rest
     }: NotificationProps,
-    forwardedRef
+    forwardedRef,
   ) => {
     let Icon: React.ElementType;
 
@@ -94,7 +94,7 @@ const Notification = React.forwardRef<
           "data-[state=closed]:fade-out-80 data-[state=open]:max-[639px]:slide-out-to-top-full data-[state=closed]:sm:slide-out-to-right-full data-[state=closed]:animate-out",
           // swipe
           "data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=end]:animate-out data-[swipe=move]:transition-none",
-          className
+          className,
         )}
         ref={forwardedRef}
         {...rest}
@@ -124,7 +124,7 @@ const Notification = React.forwardRef<
         </Alert.Root>
       </NotificationPrimitives.Root>
     );
-  }
+  },
 );
 Notification.displayName = "Notification";
 

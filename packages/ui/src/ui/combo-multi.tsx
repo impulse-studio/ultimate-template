@@ -80,7 +80,7 @@ export function ComboMulti({
       }
       onValueChange?.(Array.from(next));
     },
-    [disabled, onValueChange, selectedSet]
+    [disabled, onValueChange, selectedSet],
   );
 
   return (
@@ -117,7 +117,7 @@ export function ComboMulti({
             "relative z-50 overflow-hidden rounded-2xl bg-bg-white-0 shadow-regular-md ring-1 ring-stroke-soft-200 ring-inset",
             "min-w-[--radix-popper-anchor-width] max-w-[max(var(--radix-popper-anchor-width),320px)]",
             "data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=open]:animate-in",
-            "data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2"
+            "data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2",
           )}
           collisionPadding={10}
           onCloseAutoFocus={(e) => e.preventDefault()}
@@ -149,7 +149,7 @@ export function ComboMulti({
                   <Command.Item
                     className={cn(
                       "group cursor-pointer select-none rounded-lg p-2 text-paragraph-sm text-text-strong-950",
-                      "flex items-center gap-2 data-[selected=true]:bg-bg-weak-50 data-[selected]:outline-0"
+                      "flex items-center gap-2 data-[selected=true]:bg-bg-weak-50 data-[selected]:outline-0",
                     )}
                     disabled={opt.disabled}
                     key={opt.value}
