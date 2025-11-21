@@ -1,6 +1,6 @@
 ---
 description: Ensure pre-push hooks always run pnpm check through Husky
-globs: ["package.json", ".husky/**"]
+globs: package.json, .husky/**
 alwaysApply: false
 ---
 priority: high

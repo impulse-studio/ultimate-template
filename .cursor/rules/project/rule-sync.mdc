@@ -1,0 +1,46 @@
+---
+description: Keep Cursor rules synchronized with evolving architectural decisions
+alwaysApply: true
+---
+priority: high
+version: 2025.11.21
+---
+
+# Cursor Rule Sync
+
+## Intent
+Cursor rules are the authoritative record for architecture, shared tooling, and repo-wide conventions. Any architectural decision must be mirrored in `.mdc` files so contributors can follow the same blueprint without tribal knowledge.
+
+## When It Applies
+- Creating or modifying architectural layers (e.g., data loaders, design system primitives, cross-service gateways).
+- Introducing new libraries or runtime dependencies that change how teams build features.
+- Changing build, deployment, or automation pipelines that alter required contributor workflow.
+- Establishing repository-wide naming, folder, or ownership conventions.
+- Deprecating core patterns so teams know what to avoid moving forward.
+
+## How to Write a Cursor Rule
+1. Start with a short front-matter block:
+   - `description`: one sentence describing the architectural decision.
+   - `globs`: comma-separated list without brackets or quotes (e.g., `package.json, apps/web/**, packages/server/**/*.ts`), ignored if `alwaysApply` is `true`.
+   - `alwaysApply`: `true` only when the rule should run everywhere.
+2. Follow with a metadata block:
+   - `priority`: choose `high`, `medium`, or `low`.
+   - `version`: current date formatted as `YYYY.MM.dd` (example: `2025.11.21`).
+3. Use Markdown sections (`## Intent`, `## When It Applies`, `## Checklist`, `## Examples`).
+4. Include Good/Bad examples that mirror real architectural scenarios and explain why they matter.
+5. Document why the change exists, the required steps, and any commands contributors must run.
+
+## Checklist
+1. Review existing `.cursor/rules` to avoid duplicating or contradicting current guidance.
+2. Implement the architectural change in code and capture the reasoning while context is fresh.
+3. Write or update the matching `.mdc` rule in the same PR using the structure above.
+4. Highlight ripple effects (required scripts, environment variables, folder ownership) so downstream teams can follow them.
+5. Run `pnpm checks` after editing rules to keep formatting and automation in sync.
+
+## Examples
+
+### ✅ Good
+Introducing a shared caching layer under `packages/server/cache` and adding a rule that explains cache key naming, invalidation strategy, and the required environment variables.
+
+### ❌ Bad
+Shipping a new layout system in `packages/ui` without documenting token usage or breakpoint rules, forcing every consumer to rediscover the constraints.
