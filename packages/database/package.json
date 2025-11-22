@@ -10,9 +10,9 @@
     "./redis": "./redis.ts"
   },
   "scripts": {
+    "dev": "drizzle-kit studio",
     "db:check": "drizzle-kit check",
     "db:migrate": "ts-node ./migrate.ts",
-    "db:studio": "drizzle-kit studio",
     "db:generate": "pnpm auth:generate && pnpm exec drizzle-kit generate",
     "db:push": "drizzle-kit push",
     "auth:generate": "pnpx @better-auth/cli@1.4.0 generate --config ./auth/auth.ts -y --output ./schema/auth.ts"
