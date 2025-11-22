@@ -6,8 +6,8 @@ export type Account = typeof account.$inferSelect;
 export type Verification = typeof verification.$inferSelect;
 
 export const USER_ROLES = {
-    ADMIN: "admin",
-    USER: "user",
+  ADMIN: "admin",
+  USER: "user",
 } as const;
 
 export type UserRole = (typeof USER_ROLES)[keyof typeof USER_ROLES];

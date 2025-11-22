@@ -3,11 +3,11 @@
 import type { OperationKey } from "@orpc/tanstack-query";
 
 interface MutationMeta extends Record<string, unknown> {
-    invalidateQueries?: OperationKey[];
+  invalidateQueries?: OperationKey[];
 }
 
 declare module "@tanstack/react-query" {
-    interface Register {
-        mutationMeta: MutationMeta;
-    }
+  interface Register {
+    mutationMeta: MutationMeta;
+  }
 }
