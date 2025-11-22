@@ -6,7 +6,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
-    ".": "./index.ts"
+    ".": "./index.ts",
+    "./client": "./client.ts"
   },
   "scripts": {
     "dev": "tsc --watch --emitDeclarationOnly",
