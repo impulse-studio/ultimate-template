@@ -19,16 +19,47 @@ Cursor rules are the authoritative record for architecture, shared tooling, and 
 - Deprecating core patterns so teams know what to avoid moving forward.
 
 ## How to Write a Cursor Rule
-1. Start with a short front-matter block:
-   - `description`: one sentence describing the architectural decision.
-   - `globs`: comma-separated list without brackets or quotes (e.g., `package.json, apps/web/**, packages/server/**/*.ts`), ignored if `alwaysApply` is `true`.
-   - `alwaysApply`: `true` only when the rule should run everywhere.
-2. Follow with a metadata block:
-   - `priority`: choose `high`, `medium`, or `low`.
-   - `version`: current date formatted as `YYYY.MM.dd` (example: `2025.11.21`).
-3. Use Markdown sections (`## Intent`, `## When It Applies`, `## Checklist`, `## Examples`).
-4. Include Good/Bad examples that mirror real architectural scenarios and explain why they matter.
-5. Document why the change exists, the required steps, and any commands contributors must run.
+1. Add a front-matter block:
+   - `description`: one sentence describing the decision.
+   - `globs`: comma-separated list of affected paths (skip when `alwaysApply: true`).
+   - `alwaysApply`: set to `true` only for universal rules.
+2. Follow with metadata:
+   - `priority`: `high`, `medium`, or `low`.
+   - `version`: current date in `YYYY.MM.dd`.
+3. Structure the body with Markdown-only sections (no `<rule>` blocks):
+   - `# Title`
+   - `## Intent`, `## Checklist`, `## Details`, `## Examples` as needed.
+4. Provide Good/Bad examples using fenced code blocks or short prose that mirrors real files.
+5. Capture ripple effects (scripts to run, env vars to set, packages to import) so downstream contributors can follow the same workflow.
+6. Keep instructions actionable: each bullet should tell the reader what to do, not just why it matters.
+
+### Example Template
+```
+---
+description: Enforce shared env package
+globs: package.json, apps/web/**/*.ts, packages/server/**/*.ts
+alwaysApply: false
+---
+priority: high
+version: 2025.11.21
+---
+
+# Shared Env Package
+
+## Intent
+Explain why the pattern exists.
+
+## Checklist
+- Step 1
+- Step 2
+
+## Examples
+### ✅ Good
+code snippet
+
+### ❌ Bad
+code snippet
+```
 
 ## Checklist
 1. Review existing `.cursor/rules` to avoid duplicating or contradicting current guidance.
@@ -44,3 +75,18 @@ Introducing a shared caching layer under `packages/server/cache` and adding a ru
 
 ### ❌ Bad
 Shipping a new layout system in `packages/ui` without documenting token usage or breakpoint rules, forcing every consumer to rediscover the constraints.
+
+### ✅ Good (Markdown-Only)
+```
+## Checklist
+- Create `packages/ui/src/theme/tokens.ts`.
+- Import the tokens in `apps/web/tailwind.config`.
+```
+Uses plain Markdown sections and gives direct instructions.
+
+### ❌ Bad (YAML-Only)
+```
+actions:
+  - doThis: true
+```
+Pure YAML blocks hide context and make it unclear who needs to act, so the rule becomes unusable.

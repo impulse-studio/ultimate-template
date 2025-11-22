@@ -1,0 +1,93 @@
+description: Standardize oRPC server router structure and procedure exports
+globs: packages/server/**
+alwaysApply: false
+---
+priority: high
+version: 2025.11.21
+---
+
+# oRPC Server Routers
+
+## Intent
+Keep every server-side oRPC router consistent so new domains drop into `packages/server/src/routers` without guessing about folder shapes, procedure wiring, or authentication metadata.
+
+## Scope
+- `packages/server/src/routers/**`
+- `packages/server/src/context.ts` and `@/server/procedure/*`
+- `packages/server/src/routers/_app.ts`
+
+## Checklist
+1. Create one folder per domain under `packages/server/src/routers/<domain>` with `queries/`, `mutations/`, `validators.ts`, and `router.ts`.
+2. Inside `queries/` and `mutations/`, add an `index.ts` that re-exports every route file so `router.ts` only imports from the folder root.
+3. In each route file export exactly two symbols: `<routeName>Base` (the procedure) and `<routeName>Handler` (the resolver created via `.handler`).
+4. Build procedures with `publicProcedure`, `protectedProcedure`, or other shared helpers, chaining `.input(schema)` only when the route accepts data; omit `.input` for input-less routes.
+5. Never wrap handlers in `try/catch`; rely on the shared error registry configured in `base` and throw domain errors or use `base.errors.*`.
+6. Compose routes inside `router.ts` by importing the bases and handlers, then calling `base.router({ ... })` with per-route `.route({ method })`, optional `.meta`, and `.handler(call(...))`.
+7. Use `.meta` solely when a route needs authentication or role checks; leave it off for public endpoints.
+8. Lift every domain router into `packages/server/src/routers/_app.ts` and re-export `appRouter` (and its type) from `@repo/server` for client consumption.
+
+## Folder Layout
+Each domain folder must follow the same structure:
+
+```
+routers/
+  auth/
+    mutations/
+      index.ts
+      resend-whitelist-invitation.ts
+    queries/
+      index.ts
+      list-users.ts
+    router.ts
+    validators.ts
+```
+
+Route files stay flat (one file → one procedure) so you can reason about inputs, auth, and handlers at a glance.
+
+## Procedure Files
+- Define the base with the most specific procedure helper you need. Example: `export const listUsersBase = protectedProcedure.input(listUsersSchema);`
+- Define the handler by calling `.handler` on the base: `export const listUsersHandler = listUsersBase.handler(async ({ input, context }) => { ... });`
+- Access context (database, session, headers) through the destructured arguments; do not pull from global modules.
+- Use `call(handler, input, { context })` inside `router.ts` if you need to preserve the ctx typing when delegating shared logic.
+
+## Router File Requirements
+- Import `base` from `@/server/context` and every `{ <name>Base, <name>Handler }` from the local `queries`/`mutations` indices.
+- Instantiate a router via `export const userRouter = base.router({ ... })`.
+- Each property name becomes the RPC path segment (`user.listUsers`, `user.updateProfile`, etc.).
+- Chain `.route({ method: "GET" | "POST" | "PATCH" | "DELETE" })` before `.meta`/`.handler` to keep HTTP verbs explicit.
+- Only attach `.meta({ roles: [...] })` (or other metadata) when authentication is mandatory. Public procedures should omit `meta` to avoid accidental guards.
+- Finish with `.handler(async ({ input, context }) => call(<name>Handler, input, { context }))` so the reusable handler stays testable.
+
+### Example Router Excerpt
+```packages/server/src/routers/example/router.ts
+export const authRouter = base.router({
+    listUsers: listUsersBase
+        .route({ method: "GET" })
+        .meta({ roles: ["admin"] })
+        .handler(async ({ input, context }) =>
+            call(listUsersHandler, input, { context })
+        ),
+});
+```
+
+## Validators
+- Keep every schema inside `<domain>/validators.ts`.
+- Export schemas with descriptive names (`listUsersSchema`, `updateMultipleUsersStatusSchema`).
+- Reuse them across queries/mutations to guarantee both server validation and inferred client types stay synchronized.
+
+## Aggregation
+- `packages/server/src/routers/_app.ts` must merge every domain router into `appRouter` via `base.router({ auth: authRouter, ... })`.
+- Re-export `appRouter` (and `AppRouter` type) from `@repo/server` so clients can derive inputs/outputs with `InferRouter*`.
+- Any new domain router is added both to `_app.ts` and to whatever barrel file `@repo/server` exposes.
+
+## Good Patterns
+- Pair base + handler exports for every procedure to keep validation and resolver logic obvious.
+- Keep router files declarative (only `.route/.meta/.handler` chains) and push implementation details into handlers.
+- Use procedure helpers that encode auth requirements instead of sprinkling custom checks.
+- Share zod schemas between server handlers and any other server utilities (emails, background jobs) to stay type-safe.
+
+## Anti-Patterns
+- ❌ Skipping `index.ts` inside `queries/` or `mutations/`, forcing deep relative imports in `router.ts`.
+- ❌ Exporting anything other than `<routeName>Base` and `<routeName>Handler` from a route file.
+- ❌ Wrapping handlers in `try/catch`—the oRPC stack already maps thrown errors to HTTP responses via `base.errors`.
+- ❌ Adding `.meta` to public routes; doing so blocks anonymous callers unnecessarily.
