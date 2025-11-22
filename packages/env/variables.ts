@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const serverVariables = {
+  BETTER_AUTH_SECRET: z.string(),
   DATABASE_URL: z.string().url(),
   REDIS_URL: z.string().url(),
   VERCEL_URL: z.string().optional(),
