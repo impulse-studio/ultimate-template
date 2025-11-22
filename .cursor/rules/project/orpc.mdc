@@ -1,3 +1,4 @@
+---
 description: Standardize oRPC server router structure and procedure exports
 globs: packages/server/**
 alwaysApply: false
