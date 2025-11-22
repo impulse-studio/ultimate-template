@@ -18,7 +18,11 @@
     "db:stop": "docker compose down -v",
     "auth:generate": "turbo run auth:generate",
     "ui:add": "turbo run ui:add",
-    "prepare": "husky"
+    "prepare": "husky",
+    "env:pull": "vercel env pull .env",
+    "sync": "git fetch template && git merge template/main",
+    "sync:initial": "git fetch template && git merge template/main --allow-unrelated-histories",
+    "setup:sync": "git remote get-url template >/dev/null 2>&1 && git remote set-url template https://github.com/impulse-studio/ultimate-template.git || git remote add template https://github.com/impulse-studio/ultimate-template.git"
   },
   "devDependencies": {
     "husky": "^9.1.7",
