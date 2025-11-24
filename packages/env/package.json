@@ -7,7 +7,7 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": "./index.ts",
-    "./client": "./client.ts"
+    "./constants": "./constants.ts"
   },
   "scripts": {
     "dev": "tsc --watch --emitDeclarationOnly",

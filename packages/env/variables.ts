@@ -2,8 +2,13 @@ import { z } from "zod";
 
 export const serverVariables = {
   BETTER_AUTH_SECRET: z.string(),
+
   DATABASE_URL: z.string().url(),
   REDIS_URL: z.string().url(),
+
+  RESEND_API_KEY: z.string().min(1),
+  RESEND_FROM_EMAIL: z.string().email(),
+
   VERCEL_URL: z.string().optional(),
   VERCEL_ENV: z.enum(["development", "preview", "production"]).optional(),
   VERCEL_BRANCH_URL: z.string().optional(),
