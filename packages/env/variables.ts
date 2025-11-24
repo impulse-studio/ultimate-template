@@ -7,7 +7,7 @@ export const serverVariables = {
   REDIS_URL: z.string().url(),
 
   RESEND_API_KEY: z.string().min(1),
-  RESEND_FROM_EMAIL: z.string().email(),
+  RESEND_FROM_EMAIL: z.string().min(1),
 
   VERCEL_URL: z.string().optional(),
   VERCEL_ENV: z.enum(["development", "preview", "production"]).optional(),
