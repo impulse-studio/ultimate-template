@@ -1,6 +1,6 @@
 import type { UserRole } from "@repo/database";
-import { getServerSession } from "../utils/auth";
 import { base } from "../context";
+import { getServerSession } from "../utils/auth";
 
 export const authMiddleware = base.middleware(async (opts) => {
   const { next, procedure, errors, context } = opts;

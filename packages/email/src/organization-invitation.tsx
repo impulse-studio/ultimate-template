@@ -6,7 +6,7 @@ import { EmailButton } from "./components/email-button";
 import { EmailLayout } from "./components/email-layout";
 import { EmailFooter, EmailHeading, EmailText } from "./components/email-text";
 
-export interface OrganizationInvitationEmailProps {
+export type OrganizationInvitationEmailProps = {
   email: string;
   organization: string;
   inviter: {
@@ -15,7 +15,7 @@ export interface OrganizationInvitationEmailProps {
   };
   url: string;
   host: string;
-}
+};
 
 export default function OrganizationInvitationEmail({
   organization,

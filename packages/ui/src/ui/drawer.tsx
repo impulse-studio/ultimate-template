@@ -4,7 +4,7 @@
 
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { RiCloseLine } from "@remixicon/react";
-import * as React from "react";
+import type * as React from "react";
 
 import * as CompactButton from "@/ui/compact-button";
 import { cn } from "@/utils/cn";
@@ -21,10 +21,13 @@ DrawerClose.displayName = "DrawerClose";
 const DrawerPortal = DialogPrimitive.Portal;
 DrawerPortal.displayName = "DrawerPortal";
 
-const DrawerOverlay = React.forwardRef<
-  React.ComponentRef<typeof DialogPrimitive.Overlay>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
->(({ className, ...rest }, forwardedRef) => {
+const DrawerOverlay = ({
+  className,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay> & {
+  ref?: React.Ref<React.ComponentRef<typeof DialogPrimitive.Overlay> | null>;
+}) => {
   return (
     <DialogPrimitive.Overlay
       className={cn(
@@ -32,19 +35,23 @@ const DrawerOverlay = React.forwardRef<
         "fixed inset-0 z-50 grid grid-cols-1 place-items-end overflow-hidden bg-overlay backdrop-blur-[10px]",
         // animation
         "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=open]:animate-in",
-        className,
+        className
       )}
       ref={forwardedRef}
       {...rest}
     />
   );
-});
+};
 DrawerOverlay.displayName = "DrawerOverlay";
 
-const DrawerContent = React.forwardRef<
-  React.ComponentRef<typeof DialogPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
->(({ className, children, ...rest }, forwardedRef) => {
+const DrawerContent = ({
+  className,
+  children,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
+  ref?: React.Ref<React.ComponentRef<typeof DialogPrimitive.Content> | null>;
+}) => {
   return (
     <DrawerPortal>
       <DrawerOverlay>
@@ -58,7 +65,7 @@ const DrawerContent = React.forwardRef<
             "data-[state=closed]:animate-out data-[state=closed]:duration-200 data-[state=closed]:ease-in",
             "data-[state=open]:slide-in-from-right-full",
             "data-[state=closed]:slide-out-to-right-full",
-            className,
+            className
           )}
           ref={forwardedRef}
           {...rest}
@@ -68,7 +75,7 @@ const DrawerContent = React.forwardRef<
       </DrawerOverlay>
     </DrawerPortal>
   );
-});
+};
 DrawerContent.displayName = "DrawerContent";
 
 function DrawerHeader({
@@ -83,7 +90,7 @@ function DrawerHeader({
     <div
       className={cn(
         "flex items-center gap-3 border-stroke-soft-200 p-5",
-        className,
+        className
       )}
       {...rest}
     >
@@ -101,18 +108,19 @@ function DrawerHeader({
 }
 DrawerHeader.displayName = "DrawerHeader";
 
-const DrawerTitle = React.forwardRef<
-  React.ComponentRef<typeof DialogPrimitive.Title>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
->(({ className, ...rest }, forwardedRef) => {
-  return (
-    <DialogPrimitive.Title
-      className={cn("flex-1 text-label-lg text-text-strong-950", className)}
-      ref={forwardedRef}
-      {...rest}
-    />
-  );
-});
+const DrawerTitle = ({
+  className,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title> & {
+  ref?: React.Ref<React.ComponentRef<typeof DialogPrimitive.Title> | null>;
+}) => (
+  <DialogPrimitive.Title
+    className={cn("flex-1 text-label-lg text-text-strong-950", className)}
+    ref={forwardedRef}
+    {...rest}
+  />
+);
 DrawerTitle.displayName = "DrawerTitle";
 
 function DrawerBody({
@@ -136,7 +144,7 @@ function DrawerFooter({
     <div
       className={cn(
         "flex items-center gap-4 border-stroke-soft-200 p-5",
-        className,
+        className
       )}
       {...rest}
     />

@@ -1,7 +1,7 @@
 "use client";
 
 import * as TabsPrimitive from "@radix-ui/react-tabs";
-import * as React from "react";
+import type * as React from "react";
 
 import { cn } from "@/utils/cn";
 import type { PolymorphicComponentProps } from "@/utils/polymorphic";
@@ -14,34 +14,38 @@ type TabMenuVerticalRootProps = Omit<
   "orientation"
 >;
 
-const TabMenuVerticalRoot = React.forwardRef<
-  React.ComponentRef<typeof TabsPrimitive.Root>,
-  TabMenuVerticalRootProps
->(({ ...rest }, forwardedRef) => {
-  return (
-    <TabsPrimitive.Root orientation="vertical" ref={forwardedRef} {...rest} />
-  );
-});
+const TabMenuVerticalRoot = ({
+  ref: forwardedRef,
+  ...rest
+}: TabMenuVerticalRootProps & {
+  ref?: React.Ref<React.ComponentRef<typeof TabsPrimitive.Root> | null>;
+}) => (
+  <TabsPrimitive.Root orientation="vertical" ref={forwardedRef} {...rest} />
+);
 TabMenuVerticalRoot.displayName = "TabMenuVerticalRoot";
 
-const TabMenuVerticalList = React.forwardRef<
-  React.ComponentRef<typeof TabsPrimitive.List>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
->(({ className, ...rest }, forwardedRef) => {
-  return (
-    <TabsPrimitive.List
-      className={cn("w-full space-y-2", className)}
-      ref={forwardedRef}
-      {...rest}
-    />
-  );
-});
+const TabMenuVerticalList = ({
+  className,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof TabsPrimitive.List> & {
+  ref?: React.Ref<React.ComponentRef<typeof TabsPrimitive.List> | null>;
+}) => (
+  <TabsPrimitive.List
+    className={cn("w-full space-y-2", className)}
+    ref={forwardedRef}
+    {...rest}
+  />
+);
 TabMenuVerticalList.displayName = "TabMenuVerticalList";
 
-const TabMenuVerticalTrigger = React.forwardRef<
-  React.ComponentRef<typeof TabsPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
->(({ className, ...rest }, forwardedRef) => {
+const TabMenuVerticalTrigger = ({
+  className,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger> & {
+  ref?: React.Ref<React.ComponentRef<typeof TabsPrimitive.Trigger> | null>;
+}) => {
   return (
     <TabsPrimitive.Trigger
       className={cn(
@@ -55,13 +59,13 @@ const TabMenuVerticalTrigger = React.forwardRef<
         "focus:outline-none",
         // active
         "data-[state=active]:bg-bg-weak-50 data-[state=active]:text-text-strong-950",
-        className,
+        className
       )}
       ref={forwardedRef}
       {...rest}
     />
   );
-});
+};
 TabMenuVerticalTrigger.displayName = "TabMenuVerticalTrigger";
 
 function TabMenuVerticalIcon<T extends React.ElementType>({
@@ -79,7 +83,7 @@ function TabMenuVerticalIcon<T extends React.ElementType>({
         "transition duration-200 ease-out",
         // active
         "group-data-[state=active]/tab-item:text-primary-base",
-        className,
+        className
       )}
       {...rest}
     />
@@ -103,7 +107,7 @@ function TabMenuVerticalArrowIcon<T extends React.ElementType>({
         "scale-75 transition ease-out",
         // active
         "group-data-[state=active]/tab-item:scale-100 group-data-[state=active]/tab-item:opacity-100",
-        className,
+        className
       )}
       {...rest}
     />

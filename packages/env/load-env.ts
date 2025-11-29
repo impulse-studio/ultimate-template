@@ -4,8 +4,9 @@
  *
  * Next.js config uses its own dotenv loading inline.
  */
+
+import path from "node:path";
 import { config } from "dotenv";
-import path from "path";
 
 const envDir = path.resolve(process.cwd(), "../../");
 

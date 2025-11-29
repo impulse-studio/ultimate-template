@@ -3,16 +3,20 @@
 "use client";
 
 import * as LabelPrimitives from "@radix-ui/react-label";
-import * as React from "react";
+import type * as React from "react";
 
 import { cn } from "@/utils/cn";
 
-const LabelRoot = React.forwardRef<
-  React.ComponentRef<typeof LabelPrimitives.Root>,
-  React.ComponentPropsWithoutRef<typeof LabelPrimitives.Root> & {
-    disabled?: boolean;
-  }
->(({ className, disabled, ...rest }, forwardedRef) => {
+const LabelRoot = ({
+  className,
+  disabled,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof LabelPrimitives.Root> & {
+  disabled?: boolean;
+} & {
+  ref?: React.Ref<React.ComponentRef<typeof LabelPrimitives.Root> | null>;
+}) => {
   return (
     <LabelPrimitives.Root
       aria-disabled={disabled}
@@ -21,13 +25,13 @@ const LabelRoot = React.forwardRef<
         "flex items-center gap-px",
         // disabled
         "aria-disabled:text-text-disabled-300",
-        className,
+        className
       )}
       ref={forwardedRef}
       {...rest}
     />
   );
-});
+};
 LabelRoot.displayName = "LabelRoot";
 
 function LabelAsterisk({
@@ -41,7 +45,7 @@ function LabelAsterisk({
         "text-primary-base",
         // disabled
         "group-aria-disabled:text-text-disabled-300",
-        className,
+        className
       )}
       {...rest}
     >
@@ -61,7 +65,7 @@ function LabelSub({
         "text-paragraph-sm text-text-sub-600",
         // disabled
         "group-aria-disabled:text-text-disabled-300",
-        className,
+        className
       )}
       {...rest}
     >

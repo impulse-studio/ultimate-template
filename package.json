@@ -5,10 +5,12 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "lint": "turbo run lint",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
     "types:check": "pnpm --filter @repo/ui run build && turbo run types:check",
-    "checks:fix": "prettier --write \"**/*.{ts,tsx,md,css}\"",
-    "checks": "prettier --check \"**/*.{ts,tsx,md,css}\" && pnpm types:check && pnpm lint",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "checks": "biome check . && pnpm types:check",
     "db:check": "turbo run db:check",
     "db:migrate": "turbo run db:migrate",
     "db:studio": "turbo run db:studio",
@@ -27,13 +29,18 @@
     "setup:vercel": "vercel link --yes --project ultimate-template-web && pnpm env:pull"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.3.8",
     "husky": "^9.1.7",
-    "prettier": "^3.6.2",
+    "lint-staged": "^16.2.7",
     "turbo": "^2.6.0",
-    "typescript": "5.9.2"
+    "typescript": "5.9.2",
+    "ultracite": "^6.3.8"
   },
   "packageManager": "pnpm@9.0.0",
   "engines": {
     "node": ">=18"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,mjs,css}": "biome check --write --no-errors-on-unmatched"
   }
 }

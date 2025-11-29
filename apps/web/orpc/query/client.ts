@@ -8,6 +8,7 @@ import { serializer } from "../serializer";
 export function createQueryClient() {
   const queryClient = new QueryClient({
     mutationCache: new MutationCache({
+      // biome-ignore lint/nursery/useMaxParams: Library callback signature
       onSettled(_data, _error, _variables, _context, mutation) {
         if (mutation.meta?.invalidateQueries) {
           for (const queryKey of mutation.meta.invalidateQueries) {

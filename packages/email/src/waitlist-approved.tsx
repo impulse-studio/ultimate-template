@@ -6,11 +6,11 @@ import { EmailButton } from "./components/email-button";
 import { EmailLayout } from "./components/email-layout";
 import { EmailFooter, EmailHeading, EmailText } from "./components/email-text";
 
-export interface WaitlistApprovedTemplateProps {
+export type WaitlistApprovedTemplateProps = {
   signUpUrl: string;
   email?: string;
   discordUrl?: string;
-}
+};
 
 export default function WaitlistApprovedTemplate({
   signUpUrl,
@@ -34,7 +34,7 @@ export default function WaitlistApprovedTemplate({
           {
             "! Your application has been approved. Click the button below to register an account"
           }
-          {email && (
+          {!!email && (
             <>
               {" with your email "}
               <a className="text-blue-500" href={`mailto:${email}`}>
@@ -56,7 +56,7 @@ export default function WaitlistApprovedTemplate({
           {"Your account will be ready immediately after registration."}
         </EmailText>
 
-        {discordUrl && (
+        {!!discordUrl && (
           <>
             <EmailText className="mt-8 mb-4">
               {"We also invite you to join our Discord!"}

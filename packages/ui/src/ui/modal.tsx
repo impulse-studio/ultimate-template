@@ -2,7 +2,7 @@
 
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { type RemixiconComponentType, RiCloseLine } from "@remixicon/react";
-import * as React from "react";
+import type * as React from "react";
 
 import * as CompactButton from "@/ui/compact-button";
 import { cn } from "@/utils/cn";
@@ -12,10 +12,13 @@ const ModalTrigger = DialogPrimitive.Trigger;
 const ModalClose = DialogPrimitive.Close;
 const ModalPortal = DialogPrimitive.Portal;
 
-const ModalOverlay = React.forwardRef<
-  React.ComponentRef<typeof DialogPrimitive.Overlay>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
->(({ className, ...rest }, forwardedRef) => {
+const ModalOverlay = ({
+  className,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay> & {
+  ref?: React.Ref<React.ComponentRef<typeof DialogPrimitive.Overlay> | null>;
+}) => {
   return (
     <DialogPrimitive.Overlay
       className={cn(
@@ -23,63 +26,64 @@ const ModalOverlay = React.forwardRef<
         "fixed inset-0 z-50 flex flex-col items-center justify-center overflow-y-auto bg-overlay p-4 backdrop-blur-[10px]",
         // animation
         "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=open]:animate-in",
-        className,
+        className
       )}
       ref={forwardedRef}
       {...rest}
     />
   );
-});
+};
 ModalOverlay.displayName = "ModalOverlay";
 
-const ModalContent = React.forwardRef<
-  React.ComponentRef<typeof DialogPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
-    overlayClassName?: string;
-    showClose?: boolean;
-  }
->(
-  (
-    { className, overlayClassName, children, showClose = true, ...rest },
-    forwardedRef,
-  ) => {
-    return (
-      <ModalPortal>
-        <ModalOverlay className={overlayClassName}>
-          <DialogPrimitive.Content
-            className={cn(
-              // base
-              "relative w-full max-w-[400px]",
-              "rounded-20 bg-bg-white-0 shadow-regular-md",
-              // focus
-              "focus:outline-none",
-              // animation
-              "data-[state=closed]:animate-out data-[state=open]:animate-in",
-              "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
-              "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
-              className,
-            )}
-            ref={forwardedRef}
-            {...rest}
-          >
-            {children}
-            {showClose && (
-              <ModalClose asChild>
-                <CompactButton.Root
-                  className="absolute top-4 right-4"
-                  size="large"
-                  variant="ghost"
-                >
-                  <CompactButton.Icon as={RiCloseLine} />
-                </CompactButton.Root>
-              </ModalClose>
-            )}
-          </DialogPrimitive.Content>
-        </ModalOverlay>
-      </ModalPortal>
-    );
-  },
-);
+const ModalContent = ({
+  className,
+  overlayClassName,
+  children,
+  showClose = true,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
+  overlayClassName?: string;
+  showClose?: boolean;
+} & {
+  ref?: React.Ref<React.ComponentRef<typeof DialogPrimitive.Content> | null>;
+}) => {
+  return (
+    <ModalPortal>
+      <ModalOverlay className={overlayClassName}>
+        <DialogPrimitive.Content
+          className={cn(
+            // base
+            "relative w-full max-w-[400px]",
+            "rounded-20 bg-bg-white-0 shadow-regular-md",
+            // focus
+            "focus:outline-none",
+            // animation
+            "data-[state=closed]:animate-out data-[state=open]:animate-in",
+            "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+            "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
+            className
+          )}
+          ref={forwardedRef}
+          {...rest}
+        >
+          {children}
+          {showClose && (
+            <ModalClose asChild>
+              <CompactButton.Root
+                className="absolute top-4 right-4"
+                size="large"
+                variant="ghost"
+              >
+                <CompactButton.Icon as={RiCloseLine} />
+              </CompactButton.Root>
+            </ModalClose>
+          )}
+        </DialogPrimitive.Content>
+      </ModalOverlay>
+    </ModalPortal>
+  );
+};
 ModalContent.displayName = "ModalContent";
 
 function ModalHeader({
@@ -98,7 +102,7 @@ function ModalHeader({
     <div
       className={cn(
         "relative flex items-start gap-3.5 py-4 pr-14 pl-5 before:absolute before:inset-x-0 before:bottom-0 before:border-stroke-soft-200 before:border-b",
-        className,
+        className
       )}
       {...rest}
     >
@@ -124,32 +128,36 @@ function ModalHeader({
 }
 ModalHeader.displayName = "ModalHeader";
 
-const ModalTitle = React.forwardRef<
-  React.ComponentRef<typeof DialogPrimitive.Title>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
->(({ className, ...rest }, forwardedRef) => {
-  return (
-    <DialogPrimitive.Title
-      className={cn("text-label-sm text-text-strong-950", className)}
-      ref={forwardedRef}
-      {...rest}
-    />
-  );
-});
+const ModalTitle = ({
+  className,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title> & {
+  ref?: React.Ref<React.ComponentRef<typeof DialogPrimitive.Title> | null>;
+}) => (
+  <DialogPrimitive.Title
+    className={cn("text-label-sm text-text-strong-950", className)}
+    ref={forwardedRef}
+    {...rest}
+  />
+);
 ModalTitle.displayName = "ModalTitle";
 
-const ModalDescription = React.forwardRef<
-  React.ComponentRef<typeof DialogPrimitive.Description>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
->(({ className, ...rest }, forwardedRef) => {
-  return (
-    <DialogPrimitive.Description
-      className={cn("text-paragraph-xs text-text-sub-600", className)}
-      ref={forwardedRef}
-      {...rest}
-    />
-  );
-});
+const ModalDescription = ({
+  className,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description> & {
+  ref?: React.Ref<React.ComponentRef<
+    typeof DialogPrimitive.Description
+  > | null>;
+}) => (
+  <DialogPrimitive.Description
+    className={cn("text-paragraph-xs text-text-sub-600", className)}
+    ref={forwardedRef}
+    {...rest}
+  />
+);
 ModalDescription.displayName = "ModalDescription";
 
 function ModalBody({
@@ -168,7 +176,7 @@ function ModalFooter({
     <div
       className={cn(
         "flex items-center justify-between gap-3 border-stroke-soft-200 border-t px-5 py-4",
-        className,
+        className
       )}
       {...rest}
     />

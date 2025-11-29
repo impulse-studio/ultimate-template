@@ -239,13 +239,11 @@ const SelectRoot = ({
   variant = "default",
   hasError,
   ...rest
-}: React.ComponentProps<typeof SelectPrimitives.Root> & SelectContextType) => {
-  return (
-    <SelectContext.Provider value={{ size, variant, hasError }}>
-      <SelectPrimitives.Root {...rest} />
-    </SelectContext.Provider>
-  );
-};
+}: React.ComponentProps<typeof SelectPrimitives.Root> & SelectContextType) => (
+  <SelectContext.Provider value={{ size, variant, hasError }}>
+    <SelectPrimitives.Root {...rest} />
+  </SelectContext.Provider>
+);
 SelectRoot.displayName = "SelectRoot";
 
 const SelectGroup = SelectPrimitives.Group;
@@ -262,10 +260,14 @@ SelectGroupLabel.displayName = "SelectGroupLabel";
 
 const SELECT_TRIGGER_ICON_NAME = "SelectTriggerIcon";
 
-const SelectTrigger = React.forwardRef<
-  React.ComponentRef<typeof SelectPrimitives.Trigger>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitives.Trigger>
->(({ className, children, ...rest }, forwardedRef) => {
+const SelectTrigger = ({
+  className,
+  children,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof SelectPrimitives.Trigger> & {
+  ref?: React.Ref<React.ComponentRef<typeof SelectPrimitives.Trigger> | null>;
+}) => {
   const { size, variant, hasError } = useSelectContext();
 
   const { triggerRoot, triggerArrow } = selectVariants({
@@ -286,7 +288,7 @@ const SelectTrigger = React.forwardRef<
       </SelectPrimitives.Icon>
     </SelectPrimitives.Trigger>
   );
-});
+};
 
 SelectTrigger.displayName = "SelectTrigger";
 
@@ -304,67 +306,66 @@ function TriggerIcon<T extends React.ElementType = "div">({
 }
 TriggerIcon.displayName = SELECT_TRIGGER_ICON_NAME;
 
-const SelectContent = React.forwardRef<
-  React.ComponentRef<typeof SelectPrimitives.Content>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitives.Content>
->(
-  (
-    {
-      className,
-      position = "popper",
-      children,
-      sideOffset = 8,
-      collisionPadding = 8,
-      ...rest
-    },
-    forwardedRef,
-  ) => (
-    <SelectPrimitives.Portal>
-      <SelectPrimitives.Content
-        className={cn(
-          // base
-          "relative z-50 overflow-hidden rounded-2xl bg-bg-white-0 shadow-regular-md ring-1 ring-stroke-soft-200 ring-inset",
-          // widths
-          "min-w-[--radix-select-trigger-width] max-w-[max(var(--radix-select-trigger-width),320px)]",
-          // heights
-          "max-h-[--radix-select-content-available-height]",
-          // animation
-          "data-[state=open]:fade-in-0 data-[state=open]:animate-in",
-          "data-[state=closed]:fade-out-0 data-[state=closed]:animate-out",
-          "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
-          "data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2",
-          className,
-        )}
-        collisionPadding={collisionPadding}
-        position={position}
-        ref={forwardedRef}
-        sideOffset={sideOffset}
-        {...rest}
-      >
-        <ScrollAreaPrimitives.Root type="auto">
-          <SelectPrimitives.Viewport asChild>
-            <ScrollAreaPrimitives.Viewport
-              className="max-h-[196px] w-full scroll-py-2 overflow-auto p-2"
-              style={{ overflowY: undefined }}
-            >
-              {children}
-            </ScrollAreaPrimitives.Viewport>
-          </SelectPrimitives.Viewport>
-          <ScrollAreaPrimitives.Scrollbar orientation="vertical">
-            <ScrollAreaPrimitives.Thumb className="!w-1 rounded bg-bg-soft-200" />
-          </ScrollAreaPrimitives.Scrollbar>
-        </ScrollAreaPrimitives.Root>
-      </SelectPrimitives.Content>
-    </SelectPrimitives.Portal>
-  ),
+const SelectContent = ({
+  className,
+  position = "popper",
+  children,
+  sideOffset = 8,
+  collisionPadding = 8,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof SelectPrimitives.Content> & {
+  ref?: React.Ref<React.ComponentRef<typeof SelectPrimitives.Content> | null>;
+}) => (
+  <SelectPrimitives.Portal>
+    <SelectPrimitives.Content
+      className={cn(
+        // base
+        "relative z-50 overflow-hidden rounded-2xl bg-bg-white-0 shadow-regular-md ring-1 ring-stroke-soft-200 ring-inset",
+        // widths
+        "min-w-[--radix-select-trigger-width] max-w-[max(var(--radix-select-trigger-width),320px)]",
+        // heights
+        "max-h-[--radix-select-content-available-height]",
+        // animation
+        "data-[state=open]:fade-in-0 data-[state=open]:animate-in",
+        "data-[state=closed]:fade-out-0 data-[state=closed]:animate-out",
+        "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
+        "data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2",
+        className
+      )}
+      collisionPadding={collisionPadding}
+      position={position}
+      ref={forwardedRef}
+      sideOffset={sideOffset}
+      {...rest}
+    >
+      <ScrollAreaPrimitives.Root type="auto">
+        <SelectPrimitives.Viewport asChild>
+          <ScrollAreaPrimitives.Viewport
+            className="max-h-[196px] w-full scroll-py-2 overflow-auto p-2"
+            style={{ overflowY: undefined }}
+          >
+            {children}
+          </ScrollAreaPrimitives.Viewport>
+        </SelectPrimitives.Viewport>
+        <ScrollAreaPrimitives.Scrollbar orientation="vertical">
+          <ScrollAreaPrimitives.Thumb className="!w-1 rounded bg-bg-soft-200" />
+        </ScrollAreaPrimitives.Scrollbar>
+      </ScrollAreaPrimitives.Root>
+    </SelectPrimitives.Content>
+  </SelectPrimitives.Portal>
 );
 
 SelectContent.displayName = "SelectContent";
 
-const SelectItem = React.forwardRef<
-  React.ComponentRef<typeof SelectPrimitives.Item>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitives.Item>
->(({ className, children, ...rest }, forwardedRef) => {
+const SelectItem = ({
+  className,
+  children,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof SelectPrimitives.Item> & {
+  ref?: React.Ref<React.ComponentRef<typeof SelectPrimitives.Item> | null>;
+}) => {
   const { size } = useSelectContext();
 
   return (
@@ -380,7 +381,7 @@ const SelectItem = React.forwardRef<
         {
           "gap-1.5 pr-[34px]": size === "xsmall",
         },
-        className,
+        className
       )}
       ref={forwardedRef}
       {...rest}
@@ -394,7 +395,7 @@ const SelectItem = React.forwardRef<
             "group-disabled:text-text-disabled-300",
             {
               "gap-1.5": size === "xsmall",
-            },
+            }
           )}
         >
           {typeof children === "string" ? (
@@ -409,7 +410,7 @@ const SelectItem = React.forwardRef<
       </SelectPrimitives.ItemIndicator>
     </SelectPrimitives.Item>
   );
-});
+};
 
 SelectItem.displayName = "SelectItem";
 

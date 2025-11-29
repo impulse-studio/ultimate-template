@@ -1,17 +1,21 @@
 import * as SwitchPrimitives from "@radix-ui/react-switch";
-import * as React from "react";
+import type * as React from "react";
 
 import { cn } from "@/utils/cn";
 
-const Switch = React.forwardRef<
-  React.ComponentRef<typeof SwitchPrimitives.Root>,
-  React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root>
->(({ className, disabled, ...rest }, forwardedRef) => {
+const Switch = ({
+  className,
+  disabled,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root> & {
+  ref?: React.Ref<React.ComponentRef<typeof SwitchPrimitives.Root> | null>;
+}) => {
   return (
     <SwitchPrimitives.Root
       className={cn(
         "group/switch block h-5 w-8 shrink-0 p-0.5 outline-none focus:outline-none",
-        className,
+        className
       )}
       disabled={disabled}
       ref={forwardedRef}
@@ -41,7 +45,7 @@ const Switch = React.forwardRef<
           // disabled
           disabled && [
             "bg-bg-white-0 p-[3px] ring-1 ring-stroke-soft-200 ring-inset",
-          ],
+          ]
         )}
       >
         <SwitchPrimitives.Thumb
@@ -61,7 +65,7 @@ const Switch = React.forwardRef<
               "group-active/switch:scale-[.833]",
             ],
             // disabled,
-            disabled && ["size-2.5 rounded-full bg-bg-soft-200 shadow-none"],
+            disabled && ["size-2.5 rounded-full bg-bg-soft-200 shadow-none"]
           )}
           style={
             {
@@ -73,7 +77,7 @@ const Switch = React.forwardRef<
       </div>
     </SwitchPrimitives.Root>
   );
-});
+};
 Switch.displayName = SwitchPrimitives.Root.displayName;
 
 export { Switch as Root };

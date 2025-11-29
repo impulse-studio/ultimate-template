@@ -1,7 +1,7 @@
 import clsx, { type ClassValue } from "clsx";
 import { extendTailwindMerge } from "tailwind-merge";
 
-export { type ClassValue } from "clsx";
+export type { ClassValue } from "clsx";
 
 // AlignUI Typography Classes - Dynamic Pattern Matching
 
@@ -14,7 +14,7 @@ const typographyConfig = {
 };
 
 const typographyPatterns = Object.entries(typographyConfig).flatMap(
-  ([category, sizes]) => sizes.map((size) => `${category}-${size}`),
+  ([category, sizes]) => sizes.map((size) => `${category}-${size}`)
 );
 
 export const twMergeConfig = {

@@ -1,10 +1,10 @@
 import "server-only";
 
 import { createRouterClient } from "@orpc/server";
-import { headers } from "next/headers";
 import { db } from "@repo/database";
-import { getServerSession } from "@/lib/auth/utils";
 import { appRouter } from "@repo/server";
+import { headers } from "next/headers";
+import { getServerSession } from "@/lib/auth/utils";
 
 globalThis.$client = createRouterClient(appRouter, {
   /**

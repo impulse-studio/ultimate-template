@@ -1,9 +1,9 @@
 import { createEnv } from "@t3-oss/env-nextjs";
 import {
-  clientVariables,
-  serverVariables,
   type ClientEnv,
+  clientVariables,
   type ServerEnv,
+  serverVariables,
 } from "./variables";
 
 type Env = ServerEnv & ClientEnv;
@@ -15,7 +15,7 @@ const runtimeEnv = Object.keys(clientVariables).reduce<RuntimeEnv>(
     record[currentKey] = process.env[currentKey] ?? undefined;
     return record;
   },
-  {} as RuntimeEnv,
+  {} as RuntimeEnv
 );
 
 export const env: Env = createEnv({

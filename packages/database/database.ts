@@ -1,7 +1,8 @@
+import { env } from "@repo/env";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
-import { env } from "@repo/env";
 
+// biome-ignore lint/performance/noNamespaceImport: Drizzle requires schema object
 import * as schema from "./schema";
 
 const pool = new Pool({

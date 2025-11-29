@@ -1,8 +1,8 @@
 import { Section, Text } from "@react-email/components";
 
-interface OtpDisplayProps {
+type OtpDisplayProps = {
   otp: string;
-}
+};
 
 export function OtpDisplay({ otp }: OtpDisplayProps) {
   return (

@@ -187,7 +187,7 @@ function InputRoot({
       INPUT_INLINE_AFFIX_NAME,
     ],
     uniqueId,
-    asChild,
+    asChild
   );
 
   return (
@@ -224,34 +224,34 @@ function InputWrapper({
 }
 InputWrapper.displayName = INPUT_WRAPPER_NAME;
 
-const Input = React.forwardRef<
-  HTMLInputElement,
-  React.InputHTMLAttributes<HTMLInputElement> &
-    InputSharedProps & {
-      asChild?: boolean;
-    }
->(
-  (
-    { className, type = "text", size, hasError, asChild, ...rest },
-    forwardedRef,
-  ) => {
-    const Component = asChild ? Slot : "input";
+const Input = ({
+  className,
+  type = "text",
+  size,
+  hasError,
+  asChild,
+  ref: forwardedRef,
+  ...rest
+}: React.InputHTMLAttributes<HTMLInputElement> &
+  InputSharedProps & {
+    asChild?: boolean;
+  } & { ref?: React.Ref<HTMLInputElement | null> }) => {
+  const Component = asChild ? Slot : "input";
 
-    const { input } = inputVariants({
-      size,
-      hasError,
-    });
+  const { input } = inputVariants({
+    size,
+    hasError,
+  });
 
-    return (
-      <Component
-        className={input({ class: className })}
-        ref={forwardedRef}
-        type={type}
-        {...rest}
-      />
-    );
-  },
-);
+  return (
+    <Component
+      className={input({ class: className })}
+      ref={forwardedRef}
+      type={type}
+      {...rest}
+    />
+  );
+};
 Input.displayName = INPUT_EL_NAME;
 
 function InputIcon<T extends React.ElementType = "div">({

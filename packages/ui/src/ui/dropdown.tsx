@@ -4,7 +4,7 @@
 
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import { RiArrowRightSLine } from "@remixicon/react";
-import * as React from "react";
+import type * as React from "react";
 
 import { cn } from "@/utils/cn";
 import type { PolymorphicComponentProps } from "@/utils/polymorphic";
@@ -19,10 +19,16 @@ const DropdownMenuRadioItem = DropdownMenuPrimitive.RadioItem;
 const DropdownMenuSeparator = DropdownMenuPrimitive.Separator;
 const DropdownMenuArrow = DropdownMenuPrimitive.Arrow;
 
-const DropdownMenuContent = React.forwardRef<
-  React.ComponentRef<typeof DropdownMenuPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
->(({ className, sideOffset = 8, ...rest }, forwardedRef) => (
+const DropdownMenuContent = ({
+  className,
+  sideOffset = 8,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content> & {
+  ref?: React.Ref<React.ComponentRef<
+    typeof DropdownMenuPrimitive.Content
+  > | null>;
+}) => (
   <DropdownMenuPrimitive.Portal>
     <DropdownMenuPrimitive.Content
       className={cn(
@@ -35,22 +41,26 @@ const DropdownMenuContent = React.forwardRef<
         "data-[state=closed]:fade-out-0 data-[state=closed]:animate-out",
         "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
         "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-        className,
+        className
       )}
       ref={forwardedRef}
       sideOffset={sideOffset}
       {...rest}
     />
   </DropdownMenuPrimitive.Portal>
-));
+);
 DropdownMenuContent.displayName = "DropdownMenuContent";
 
-const DropdownMenuItem = React.forwardRef<
-  React.ComponentRef<typeof DropdownMenuPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
-    inset?: boolean;
-  }
->(({ className, inset, ...rest }, forwardedRef) => (
+const DropdownMenuItem = ({
+  className,
+  inset,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
+  inset?: boolean;
+} & {
+  ref?: React.Ref<React.ComponentRef<typeof DropdownMenuPrimitive.Item> | null>;
+}) => (
   <DropdownMenuPrimitive.Item
     className={cn(
       // base
@@ -64,12 +74,12 @@ const DropdownMenuItem = React.forwardRef<
       // disabled
       "data-[disabled]:text-text-disabled-300",
       inset && "pl-9",
-      className,
+      className
     )}
     ref={forwardedRef}
     {...rest}
   />
-));
+);
 DropdownMenuItem.displayName = "DropdownMenuItem";
 
 function DropdownItemIcon<T extends React.ElementType>({
@@ -86,7 +96,7 @@ function DropdownItemIcon<T extends React.ElementType>({
         "size-5 text-text-sub-600",
         // disabled
         "group-has-[[data-disabled]]:text-text-disabled-300",
-        className,
+        className
       )}
       {...rest}
     />
@@ -94,39 +104,56 @@ function DropdownItemIcon<T extends React.ElementType>({
 }
 DropdownItemIcon.displayName = "DropdownItemIcon";
 
-const DropdownMenuGroup = React.forwardRef<
-  React.ComponentRef<typeof DropdownMenuPrimitive.Group>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Group>
->(({ className, ...rest }, forwardedRef) => (
+const DropdownMenuGroup = ({
+  className,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Group> & {
+  ref?: React.Ref<React.ComponentRef<
+    typeof DropdownMenuPrimitive.Group
+  > | null>;
+}) => (
   <DropdownMenuPrimitive.Group
     className={cn("flex flex-col gap-1", className)}
     ref={forwardedRef}
     {...rest}
   />
-));
+);
 DropdownMenuGroup.displayName = "DropdownMenuGroup";
 
-const DropdownMenuLabel = React.forwardRef<
-  React.ComponentRef<typeof DropdownMenuPrimitive.Label>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Label>
->(({ className, ...rest }, forwardedRef) => (
+const DropdownMenuLabel = ({
+  className,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Label> & {
+  ref?: React.Ref<React.ComponentRef<
+    typeof DropdownMenuPrimitive.Label
+  > | null>;
+}) => (
   <DropdownMenuPrimitive.Label
     className={cn(
       "px-2 py-1 text-subheading-xs text-text-soft-400 uppercase",
-      className,
+      className
     )}
     ref={forwardedRef}
     {...rest}
   />
-));
+);
 DropdownMenuLabel.displayName = "DropdownMenuLabel";
 
-const DropdownMenuSubTrigger = React.forwardRef<
-  React.ComponentRef<typeof DropdownMenuPrimitive.SubTrigger>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {
-    inset?: boolean;
-  }
->(({ className, inset, children, ...rest }, forwardedRef) => (
+const DropdownMenuSubTrigger = ({
+  className,
+  inset,
+  children,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {
+  inset?: boolean;
+} & {
+  ref?: React.Ref<React.ComponentRef<
+    typeof DropdownMenuPrimitive.SubTrigger
+  > | null>;
+}) => (
   <DropdownMenuPrimitive.SubTrigger
     className={cn(
       // base
@@ -138,7 +165,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
       // disabled
       "data-[disabled]:text-text-disabled-300",
       inset && "pl-9",
-      className,
+      className
     )}
     ref={forwardedRef}
     {...rest}
@@ -147,13 +174,18 @@ const DropdownMenuSubTrigger = React.forwardRef<
     <span className="flex-1" />
     <DropdownItemIcon as={RiArrowRightSLine} />
   </DropdownMenuPrimitive.SubTrigger>
-));
+);
 DropdownMenuSubTrigger.displayName = "DropdownMenuSubTrigger";
 
-const DropdownMenuSubContent = React.forwardRef<
-  React.ComponentRef<typeof DropdownMenuPrimitive.SubContent>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>
->(({ className, ...rest }, forwardedRef) => (
+const DropdownMenuSubContent = ({
+  className,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent> & {
+  ref?: React.Ref<React.ComponentRef<
+    typeof DropdownMenuPrimitive.SubContent
+  > | null>;
+}) => (
   <DropdownMenuPrimitive.SubContent
     className={cn(
       "z-50 w-max overflow-hidden rounded-2xl bg-bg-white-0 p-2 shadow-regular-md ring-1 ring-stroke-soft-200 ring-inset",
@@ -163,12 +195,12 @@ const DropdownMenuSubContent = React.forwardRef<
       "data-[state=closed]:fade-out-0 data-[state=closed]:animate-out",
       "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
       "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-      className,
+      className
     )}
     ref={forwardedRef}
     {...rest}
   />
-));
+);
 DropdownMenuSubContent.displayName = "DropdownMenuSubContent";
 
 export {

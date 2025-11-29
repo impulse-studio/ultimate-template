@@ -86,39 +86,43 @@ type LinkButtonProps = VariantProps<typeof linkButtonVariants> &
     asChild?: boolean;
   };
 
-const LinkButtonRoot = React.forwardRef<HTMLButtonElement, LinkButtonProps>(
-  (
-    { asChild, children, variant, size, underline, className, ...rest },
-    forwardedRef,
-  ) => {
-    const uniqueId = React.useId();
-    const Component = asChild ? Slot : "button";
-    const { root } = linkButtonVariants({ variant, size, underline });
+const LinkButtonRoot = ({
+  asChild,
+  children,
+  variant,
+  size,
+  underline,
+  className,
+  ref: forwardedRef,
+  ...rest
+}: LinkButtonProps & { ref?: React.Ref<HTMLButtonElement | null> }) => {
+  const uniqueId = React.useId();
+  const Component = asChild ? Slot : "button";
+  const { root } = linkButtonVariants({ variant, size, underline });
 
-    const sharedProps: LinkButtonSharedProps = {
-      variant,
-      size,
-    };
+  const sharedProps: LinkButtonSharedProps = {
+    variant,
+    size,
+  };
 
-    const extendedChildren = recursiveCloneChildren(
-      children as React.ReactElement[],
-      sharedProps,
-      [LINK_BUTTON_ICON_NAME],
-      uniqueId,
-      asChild,
-    );
+  const extendedChildren = recursiveCloneChildren(
+    children as React.ReactElement[],
+    sharedProps,
+    [LINK_BUTTON_ICON_NAME],
+    uniqueId,
+    asChild
+  );
 
-    return (
-      <Component
-        className={root({ class: className })}
-        ref={forwardedRef}
-        {...rest}
-      >
-        {extendedChildren}
-      </Component>
-    );
-  },
-);
+  return (
+    <Component
+      className={root({ class: className })}
+      ref={forwardedRef}
+      {...rest}
+    >
+      {extendedChildren}
+    </Component>
+  );
+};
 LinkButtonRoot.displayName = LINK_BUTTON_ROOT_NAME;
 
 function LinkButtonIcon<T extends React.ElementType>({

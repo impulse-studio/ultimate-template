@@ -1,6 +1,6 @@
 // AlignUI Textarea v0.0.0
 
-import * as React from "react";
+import type * as React from "react";
 
 import { cn } from "@/utils/cn";
 
@@ -9,13 +9,17 @@ const TEXTAREA_NAME = "Textarea";
 const TEXTAREA_RESIZE_HANDLE_NAME = "TextareaResizeHandle";
 const TEXTAREA_COUNTER_NAME = "TextareaCounter";
 
-const Textarea = React.forwardRef<
-  HTMLTextAreaElement,
-  React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
-    hasError?: boolean;
-    simple?: boolean;
-  }
->(({ className, hasError, simple, disabled, ...rest }, forwardedRef) => {
+const Textarea = ({
+  className,
+  hasError,
+  simple,
+  disabled,
+  ref: forwardedRef,
+  ...rest
+}: React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
+  hasError?: boolean;
+  simple?: boolean;
+} & { ref?: React.Ref<HTMLTextAreaElement | null> }) => {
   return (
     <textarea
       className={cn(
@@ -60,14 +64,14 @@ const Textarea = React.forwardRef<
             "text-text-disabled-300 placeholder:text-text-disabled-300",
           ],
         ],
-        className,
+        className
       )}
       disabled={disabled}
       ref={forwardedRef}
       {...rest}
     />
   );
-});
+};
 Textarea.displayName = TEXTAREA_NAME;
 
 function ResizeHandle() {
@@ -107,59 +111,59 @@ type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> &
       }
   );
 
-const TextareaRoot = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  (
-    { containerClassName, children, hasError, simple, ...rest },
-    forwardedRef,
-  ) => {
-    if (simple) {
-      return (
-        <Textarea hasError={hasError} ref={forwardedRef} simple {...rest} />
-      );
-    }
+const TextareaRoot = ({
+  containerClassName,
+  children,
+  hasError,
+  simple,
+  ref: forwardedRef,
+  ...rest
+}: TextareaProps & { ref?: React.Ref<HTMLTextAreaElement | null> }) => {
+  if (simple) {
+    return <Textarea hasError={hasError} ref={forwardedRef} simple {...rest} />;
+  }
 
-    return (
-      <div
-        className={cn(
-          [
-            // base
-            "group/textarea relative flex w-full flex-col rounded-xl bg-bg-white-0 pb-2.5 shadow-regular-xs",
-            "ring-1 ring-stroke-soft-200 ring-inset",
-            "transition duration-200 ease-out",
-            // hover
-            "hover:[&:not(:focus-within)]:bg-bg-weak-50",
-            // disabled
-            "has-[[disabled]]:pointer-events-none has-[[disabled]]:bg-bg-weak-50 has-[[disabled]]:ring-transparent",
-          ],
-          !hasError && [
-            // hover
-            "hover:[&:not(:focus-within)]:ring-transparent",
-            // focus
-            "focus-within:shadow-button-important-focus focus-within:ring-stroke-strong-950",
-          ],
-          hasError && [
-            // base
-            "ring-error-base",
-            // focus
-            "focus-within:shadow-button-error-focus focus-within:ring-error-base",
-          ],
-          containerClassName,
-        )}
-      >
-        <div className="grid">
-          <div className="pointer-events-none relative z-10 flex flex-col gap-2 [grid-area:1/1]">
-            <Textarea hasError={hasError} ref={forwardedRef} {...rest} />
-            <div className="pointer-events-none flex items-center justify-end gap-1.5 pr-2.5 pl-3">
-              {children}
-              <ResizeHandle />
-            </div>
+  return (
+    <div
+      className={cn(
+        [
+          // base
+          "group/textarea relative flex w-full flex-col rounded-xl bg-bg-white-0 pb-2.5 shadow-regular-xs",
+          "ring-1 ring-stroke-soft-200 ring-inset",
+          "transition duration-200 ease-out",
+          // hover
+          "hover:[&:not(:focus-within)]:bg-bg-weak-50",
+          // disabled
+          "has-[[disabled]]:pointer-events-none has-[[disabled]]:bg-bg-weak-50 has-[[disabled]]:ring-transparent",
+        ],
+        !hasError && [
+          // hover
+          "hover:[&:not(:focus-within)]:ring-transparent",
+          // focus
+          "focus-within:shadow-button-important-focus focus-within:ring-stroke-strong-950",
+        ],
+        hasError && [
+          // base
+          "ring-error-base",
+          // focus
+          "focus-within:shadow-button-error-focus focus-within:ring-error-base",
+        ],
+        containerClassName
+      )}
+    >
+      <div className="grid">
+        <div className="pointer-events-none relative z-10 flex flex-col gap-2 [grid-area:1/1]">
+          <Textarea hasError={hasError} ref={forwardedRef} {...rest} />
+          <div className="pointer-events-none flex items-center justify-end gap-1.5 pr-2.5 pl-3">
+            {children}
+            <ResizeHandle />
           </div>
-          <div className="min-h-full resize-y overflow-hidden opacity-0 [grid-area:1/1]" />
         </div>
+        <div className="min-h-full resize-y overflow-hidden opacity-0 [grid-area:1/1]" />
       </div>
-    );
-  },
-);
+    </div>
+  );
+};
 TextareaRoot.displayName = TEXTAREA_ROOT_NAME;
 
 function CharCounter({
@@ -185,7 +189,7 @@ function CharCounter({
         {
           "text-error-base": isError,
         },
-        className,
+        className
       )}
     >
       {`${current}/${max}`}

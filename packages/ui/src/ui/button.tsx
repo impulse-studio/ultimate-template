@@ -255,40 +255,44 @@ type ButtonRootProps = VariantProps<typeof buttonVariants> &
     asChild?: boolean;
   };
 
-const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
-  (
-    { children, variant, mode, size, asChild, className, ...rest },
-    forwardedRef,
-  ) => {
-    const uniqueId = React.useId();
-    const Component = asChild ? Slot : "button";
-    const { root } = buttonVariants({ variant, mode, size });
+const ButtonRoot = ({
+  children,
+  variant,
+  mode,
+  size,
+  asChild,
+  className,
+  ref: forwardedRef,
+  ...rest
+}: ButtonRootProps & { ref?: React.Ref<HTMLButtonElement | null> }) => {
+  const uniqueId = React.useId();
+  const Component = asChild ? Slot : "button";
+  const { root } = buttonVariants({ variant, mode, size });
 
-    const sharedProps: ButtonSharedProps = {
-      variant,
-      mode,
-      size,
-    };
+  const sharedProps: ButtonSharedProps = {
+    variant,
+    mode,
+    size,
+  };
 
-    const extendedChildren = recursiveCloneChildren(
-      children as React.ReactElement[],
-      sharedProps,
-      [BUTTON_ICON_NAME],
-      uniqueId,
-      asChild,
-    );
+  const extendedChildren = recursiveCloneChildren(
+    children as React.ReactElement[],
+    sharedProps,
+    [BUTTON_ICON_NAME],
+    uniqueId,
+    asChild
+  );
 
-    return (
-      <Component
-        className={root({ class: className })}
-        ref={forwardedRef}
-        {...rest}
-      >
-        {extendedChildren}
-      </Component>
-    );
-  },
-);
+  return (
+    <Component
+      className={root({ class: className })}
+      ref={forwardedRef}
+      {...rest}
+    >
+      {extendedChildren}
+    </Component>
+  );
+};
 ButtonRoot.displayName = BUTTON_ROOT_NAME;
 
 function ButtonIcon<T extends React.ElementType>({

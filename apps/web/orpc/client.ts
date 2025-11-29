@@ -8,8 +8,6 @@ import type {
 } from "@orpc/server";
 import { createTanstackQueryUtils } from "@orpc/tanstack-query";
 import type { appRouter } from "@repo/server";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import type * as _A from "@orpc/contract";
 
 declare global {
   var $client: RouterClient<typeof appRouter> | undefined;

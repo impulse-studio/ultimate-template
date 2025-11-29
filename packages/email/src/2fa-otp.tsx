@@ -7,11 +7,11 @@ import { EmailLayout } from "./components/email-layout";
 import { EmailFooter, EmailHeading, EmailText } from "./components/email-text";
 import { OtpDisplay } from "./components/otp-display";
 
-export interface TwoFactorOTPTemplateProps {
+export type TwoFactorOTPTemplateProps = {
   otp: string;
   host?: string;
   name?: string;
-}
+};
 
 function TwoFactorOTPTemplate({
   otp,

@@ -10,7 +10,7 @@ export function createIPRateLimitMiddleware(config: RateLimitConfig) {
 
     const result = await rateLimitService.checkIPRateLimit(
       context?.headers,
-      config,
+      config
     );
 
     if (result.isLimitExceeded) {

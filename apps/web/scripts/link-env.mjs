@@ -6,9 +6,9 @@
  *
  * Symlinks are only created in local dev (skipped in CI/Vercel).
  */
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 // Skip in CI/deployment environments
 const isCI =
@@ -60,4 +60,3 @@ for (const file of envFiles) {
     }
   }
 }
-

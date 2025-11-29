@@ -2,9 +2,9 @@ import { Section } from "@react-email/components";
 
 import { cn } from "@repo/ui/utils/cn";
 
-interface LogoProps {
+type LogoProps = {
   className?: string;
-}
+};
 
 export function Logo({ className }: LogoProps) {
   return (

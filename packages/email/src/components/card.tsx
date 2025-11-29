@@ -1,9 +1,9 @@
 import { Section } from "@react-email/components";
 import type { ReactNode } from "react";
 
-interface CardProps {
+type CardProps = {
   children: ReactNode;
-}
+};
 
 export function Card({ children }: CardProps) {
   return (

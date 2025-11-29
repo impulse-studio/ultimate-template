@@ -8,10 +8,10 @@ import {
 } from "@react-email/components";
 import type { ReactNode } from "react";
 
-interface EmailLayoutProps {
+type EmailLayoutProps = {
   children: ReactNode;
   previewText: string;
-}
+};
 
 export function EmailLayout({ children, previewText }: EmailLayoutProps) {
   return (

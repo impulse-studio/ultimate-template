@@ -11,12 +11,14 @@ import * as React from "react";
  *
  * @returns The cloned node(s) with the additional props applied to the matched components.
  */
+// biome-ignore lint/nursery/useMaxParams: Utility function
 export function recursiveCloneChildren(
   children: React.ReactNode,
+  // biome-ignore lint/suspicious/noExplicitAny: Generic props
   additionalProps: any,
   displayNames: string[],
   uniqueId: string,
-  asChild?: boolean,
+  asChild?: boolean
 ): React.ReactNode | React.ReactNode[] {
   const mappedChildren = React.Children.map(
     children,
@@ -31,20 +33,22 @@ export function recursiveCloneChildren(
         ? additionalProps
         : {};
 
+      // biome-ignore lint/suspicious/noExplicitAny: React element typing
       const childProps = (child as React.ReactElement<any>).props;
 
       return React.cloneElement(
         child,
+        // biome-ignore lint/suspicious/noArrayIndexKey: Recursive cloning requires stable keys based on position if not provided
         { ...newProps, key: `${uniqueId}-${index}` },
         recursiveCloneChildren(
           childProps?.children,
           additionalProps,
           displayNames,
           uniqueId,
-          childProps?.asChild,
-        ),
+          childProps?.asChild
+        )
       );
-    },
+    }
   );
 
   return asChild ? mappedChildren?.[0] : mappedChildren;

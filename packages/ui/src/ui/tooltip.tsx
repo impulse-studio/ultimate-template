@@ -3,7 +3,7 @@
 "use client";
 
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
-import * as React from "react";
+import type * as React from "react";
 
 import { tv, type VariantProps } from "@/utils/tv";
 
@@ -83,37 +83,39 @@ export const tooltipVariants = tv({
   },
 });
 
-const TooltipContent = React.forwardRef<
-  React.ComponentRef<typeof TooltipPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content> &
-    VariantProps<typeof tooltipVariants>
->(
-  (
-    { size, variant, className, children, sideOffset = 4, ...rest },
-    forwardedRef,
-  ) => {
-    const { content, arrow } = tooltipVariants({
-      size,
-      variant,
-    });
+const TooltipContent = ({
+  size,
+  variant,
+  className,
+  children,
+  sideOffset = 4,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content> &
+  VariantProps<typeof tooltipVariants> & {
+    ref?: React.Ref<React.ComponentRef<typeof TooltipPrimitive.Content> | null>;
+  }) => {
+  const { content, arrow } = tooltipVariants({
+    size,
+    variant,
+  });
 
-    return (
-      <TooltipPrimitive.Portal>
-        <TooltipPrimitive.Content
-          className={content({ class: className })}
-          ref={forwardedRef}
-          sideOffset={sideOffset}
-          {...rest}
-        >
-          {children}
-          <TooltipPrimitive.Arrow asChild>
-            <div className={arrow()} />
-          </TooltipPrimitive.Arrow>
-        </TooltipPrimitive.Content>
-      </TooltipPrimitive.Portal>
-    );
-  },
-);
+  return (
+    <TooltipPrimitive.Portal>
+      <TooltipPrimitive.Content
+        className={content({ class: className })}
+        ref={forwardedRef}
+        sideOffset={sideOffset}
+        {...rest}
+      >
+        {children}
+        <TooltipPrimitive.Arrow asChild>
+          <div className={arrow()} />
+        </TooltipPrimitive.Arrow>
+      </TooltipPrimitive.Content>
+    </TooltipPrimitive.Portal>
+  );
+};
 TooltipContent.displayName = TooltipPrimitive.Content.displayName;
 
 export {

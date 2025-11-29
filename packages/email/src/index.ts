@@ -1,26 +1,14 @@
-import { createElement, type ComponentType } from "react";
 import { render } from "@react-email/components";
 import { env } from "@repo/env";
+import { type ComponentType, createElement } from "react";
 import { Resend } from "resend";
 
-import TwoFactorOTPTemplate, {
-  type TwoFactorOTPTemplateProps,
-} from "./2fa-otp";
-import ChangeEmailTemplate, {
-  type ChangeEmailTemplateProps,
-} from "./change-email";
-import OrganizationInvitationEmail, {
-  type OrganizationInvitationEmailProps,
-} from "./organization-invitation";
-import ResetPasswordTemplate, {
-  type ResetPasswordTemplateProps,
-} from "./reset-password";
-import VerifyEmailTemplate, {
-  type VerifyEmailTemplateProps,
-} from "./verify-email";
-import WaitlistApprovedTemplate, {
-  type WaitlistApprovedTemplateProps,
-} from "./waitlist-approved";
+import TwoFactorOTPTemplate from "./2fa-otp";
+import ChangeEmailTemplate from "./change-email";
+import OrganizationInvitationEmail from "./organization-invitation";
+import ResetPasswordTemplate from "./reset-password";
+import VerifyEmailTemplate from "./verify-email";
+import WaitlistApprovedTemplate from "./waitlist-approved";
 
 const resendClient = new Resend(env.RESEND_API_KEY);
 
@@ -31,6 +19,7 @@ const templateRegistry = {
   "reset-password": ResetPasswordTemplate,
   "verify-email": VerifyEmailTemplate,
   "waitlist-approved": WaitlistApprovedTemplate,
+  // biome-ignore lint/suspicious/noExplicitAny: Generic component type
 } satisfies Record<string, ComponentType<any>>;
 
 type TemplateRegistry = typeof templateRegistry;
@@ -43,19 +32,19 @@ type TemplatePropsMap = {
 export type EmailTemplateProps<Template extends EmailTemplateName> =
   TemplatePropsMap[Template];
 
-export interface SendEmailOptions {
+export type SendEmailOptions = {
   to: string | string[];
   subject: string;
   from?: string;
   cc?: string | string[];
   bcc?: string | string[];
   replyTo?: string | string[];
-}
+};
 
 export async function sendEmail<Template extends EmailTemplateName>(
   template: Template,
   props: EmailTemplateProps<Template>,
-  options: SendEmailOptions,
+  options: SendEmailOptions
 ) {
   const Component = templateRegistry[template] as ComponentType<
     EmailTemplateProps<Template>

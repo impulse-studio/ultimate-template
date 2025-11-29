@@ -1,7 +1,7 @@
 // AlignUI Breadcrumb v0.0.0
 
 import { Slot } from "@radix-ui/react-slot";
-import * as React from "react";
+import type * as React from "react";
 
 import { cn } from "@/utils/cn";
 import type { PolymorphicComponentProps } from "@/utils/polymorphic";
@@ -36,34 +36,39 @@ type BreadcrumbItemProps = React.HTMLAttributes<HTMLDivElement> & {
   active?: boolean;
 };
 
-const BreadcrumbItem = React.forwardRef<HTMLDivElement, BreadcrumbItemProps>(
-  ({ asChild, children, className, active, ...rest }, forwardedRef) => {
-    const Component = asChild ? Slot : "div";
+const BreadcrumbItem = ({
+  asChild,
+  children,
+  className,
+  active,
+  ref: forwardedRef,
+  ...rest
+}: BreadcrumbItemProps & { ref?: React.Ref<HTMLDivElement | null> }) => {
+  const Component = asChild ? Slot : "div";
 
-    return (
-      <Component
-        className={cn(
-          // base
-          "flex items-center gap-1.5 transition-colors duration-200 ease-out",
-          "text-label-sm text-text-sub-600",
-          {
-            // not active
-            "underline decoration-transparent": !active,
-            // hover
-            "hover:text-text-strong-950 hover:decoration-current": !active,
-            // active
-            "text-text-strong-950": active,
-          },
-          className,
-        )}
-        ref={forwardedRef}
-        {...rest}
-      >
-        {children}
-      </Component>
-    );
-  },
-);
+  return (
+    <Component
+      className={cn(
+        // base
+        "flex items-center gap-1.5 transition-colors duration-200 ease-out",
+        "text-label-sm text-text-sub-600",
+        {
+          // not active
+          "underline decoration-transparent": !active,
+          // hover
+          "hover:text-text-strong-950 hover:decoration-current": !active,
+          // active
+          "text-text-strong-950": active,
+        },
+        className
+      )}
+      ref={forwardedRef}
+      {...rest}
+    >
+      {children}
+    </Component>
+  );
+};
 BreadcrumbItem.displayName = BREADCRUMB_ITEM_NAME;
 
 function BreadcrumbItemIcon<T extends React.ElementType>({
@@ -88,7 +93,7 @@ function BreadcrumbItemArrowIcon<T extends React.ElementType>({
     <Component
       className={cn(
         "flex size-5 select-none items-center justify-center text-text-disabled-300",
-        className,
+        className
       )}
       {...rest}
     />

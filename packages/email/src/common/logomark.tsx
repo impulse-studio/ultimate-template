@@ -1,14 +1,13 @@
-import type React from "react";
-
-import { Logo } from "@/common/logo";
 import { PROJECT } from "@repo/env/constants";
 import { cn } from "@repo/ui/utils/cn";
+import type React from "react";
+import { Logo } from "@/common/logo";
 
-interface LogomarkProps {
+type LogomarkProps = {
   className?: string;
   logoClassName?: string;
   textClassName?: string;
-}
+};
 
 function Logomark({
   className,

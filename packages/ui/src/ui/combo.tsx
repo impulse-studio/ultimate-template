@@ -41,9 +41,10 @@ export function Combo({
   const [open, setOpen] = React.useState(false);
   const [query, setQuery] = React.useState("");
 
-  const selected = React.useMemo(() => {
-    return options.find((o) => o.value === value);
-  }, [options, value]);
+  const selected = React.useMemo(
+    () => options.find((o) => o.value === value),
+    [options, value]
+  );
 
   const filtered = React.useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -74,7 +75,7 @@ export function Combo({
       setOpen(false);
       setQuery("");
     },
-    [disabled, onValueChange],
+    [disabled, onValueChange]
   );
 
   return (
@@ -115,7 +116,7 @@ export function Combo({
             "relative z-50 overflow-hidden rounded-2xl bg-bg-white-0 shadow-regular-md ring-1 ring-stroke-soft-200 ring-inset",
             "min-w-[--radix-popper-anchor-width] max-w-[max(var(--radix-popper-anchor-width),320px)]",
             "data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=open]:animate-in",
-            "data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2",
+            "data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2"
           )}
           collisionPadding={10}
           onCloseAutoFocus={(e) => {
@@ -145,35 +146,33 @@ export function Combo({
             </div>
 
             <Command.List className="max-h-[196px] overflow-auto p-2 pt-0">
-              {filtered.map((opt) => {
-                return (
-                  <Command.Item
-                    className={cn(
-                      "group relative cursor-pointer select-none rounded-lg p-2 pr-9 text-paragraph-sm text-text-strong-950",
-                      "flex items-center gap-2 data-[selected=true]:bg-bg-weak-50 data-[selected]:outline-0",
-                    )}
-                    disabled={opt.disabled}
-                    key={opt.value}
-                    keywords={opt.keywords}
-                    onSelect={() => {
-                      handleSelect(opt);
-                    }}
-                    value={
-                      typeof opt.label === "string"
-                        ? opt.label
-                        : String(opt.value)
-                    }
-                  >
-                    {opt.icon ? (
-                      <span className="size-5 shrink-0">{opt.icon}</span>
-                    ) : null}
-                    <span className="line-clamp-1">{opt.label}</span>
-                    {value === opt.value ? (
-                      <RiCheckLine className="-translate-y-1/2 absolute top-1/2 right-2 size-5 shrink-0 text-text-sub-600" />
-                    ) : null}
-                  </Command.Item>
-                );
-              })}
+              {filtered.map((opt) => (
+                <Command.Item
+                  className={cn(
+                    "group relative cursor-pointer select-none rounded-lg p-2 pr-9 text-paragraph-sm text-text-strong-950",
+                    "flex items-center gap-2 data-[selected=true]:bg-bg-weak-50 data-[selected]:outline-0"
+                  )}
+                  disabled={opt.disabled}
+                  key={opt.value}
+                  keywords={opt.keywords}
+                  onSelect={() => {
+                    handleSelect(opt);
+                  }}
+                  value={
+                    typeof opt.label === "string"
+                      ? opt.label
+                      : String(opt.value)
+                  }
+                >
+                  {opt.icon ? (
+                    <span className="size-5 shrink-0">{opt.icon}</span>
+                  ) : null}
+                  <span className="line-clamp-1">{opt.label}</span>
+                  {value === opt.value ? (
+                    <RiCheckLine className="-translate-y-1/2 absolute top-1/2 right-2 size-5 shrink-0 text-text-sub-600" />
+                  ) : null}
+                </Command.Item>
+              ))}
             </Command.List>
           </Command>
         </PopoverPrimitives.Content>

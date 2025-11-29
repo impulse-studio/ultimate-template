@@ -106,7 +106,7 @@ function PaginationRoot({
       PAGINATION_NAV_ICON_NAME,
     ],
     uniqueId,
-    asChild,
+    asChild
   );
 
   return (
@@ -123,27 +123,32 @@ type PaginationItemProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
     current?: boolean;
   };
 
-const PaginationItem = React.forwardRef<HTMLButtonElement, PaginationItemProps>(
-  (
-    { asChild, children, className, variant, current, ...rest },
-    forwardedRef,
-  ) => {
-    const Component = asChild ? Slot : "button";
-    const { item } = paginationVariants({ variant });
+const PaginationItem = ({
+  asChild,
+  children,
+  className,
+  variant,
+  current,
+  ref: forwardedRef,
+  ...rest
+}: PaginationItemProps & {
+  ref?: React.Ref<HTMLButtonElement | null>;
+}) => {
+  const Component = asChild ? Slot : "button";
+  const { item } = paginationVariants({ variant });
 
-    return (
-      <Component
-        className={cn(item({ class: className }), {
-          "text-text-strong-950": current,
-        })}
-        ref={forwardedRef}
-        {...rest}
-      >
-        {children}
-      </Component>
-    );
-  },
-);
+  return (
+    <Component
+      className={cn(item({ class: className }), {
+        "text-text-strong-950": current,
+      })}
+      ref={forwardedRef}
+      {...rest}
+    >
+      {children}
+    </Component>
+  );
+};
 PaginationItem.displayName = PAGINATION_ITEM_NAME;
 
 type PaginationNavButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
@@ -151,10 +156,16 @@ type PaginationNavButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
     asChild?: boolean;
   };
 
-const PaginationNavButton = React.forwardRef<
-  HTMLButtonElement,
-  PaginationNavButtonProps
->(({ asChild, children, className, variant, ...rest }, forwardedRef) => {
+const PaginationNavButton = ({
+  asChild,
+  children,
+  className,
+  variant,
+  ref: forwardedRef,
+  ...rest
+}: PaginationNavButtonProps & {
+  ref?: React.Ref<HTMLButtonElement | null>;
+}) => {
   const Component = asChild ? Slot : "button";
   const { navButton } = paginationVariants({ variant });
 
@@ -167,7 +178,7 @@ const PaginationNavButton = React.forwardRef<
       {children}
     </Component>
   );
-});
+};
 PaginationNavButton.displayName = PAGINATION_NAV_BUTTON_NAME;
 
 function PaginationNavIcon<T extends React.ElementType>({

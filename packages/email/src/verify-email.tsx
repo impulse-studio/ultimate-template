@@ -7,12 +7,12 @@ import { EmailLayout } from "./components/email-layout";
 import { EmailFooter, EmailHeading, EmailText } from "./components/email-text";
 import { OtpDisplay } from "./components/otp-display";
 
-export interface VerifyEmailTemplateProps {
+export type VerifyEmailTemplateProps = {
   otp: string;
   host: string;
   email: string;
   name?: string;
-}
+};
 
 export default function VerifyEmailTemplate({
   otp,

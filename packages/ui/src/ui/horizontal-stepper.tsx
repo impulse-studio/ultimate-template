@@ -94,10 +94,16 @@ type HorizontalStepperItemProps =
       asChild?: boolean;
     };
 
-const HorizontalStepperItem = React.forwardRef<
-  HTMLButtonElement,
-  HorizontalStepperItemProps
->(({ asChild, children, state, className, ...rest }, forwardedRef) => {
+const HorizontalStepperItem = ({
+  asChild,
+  children,
+  state,
+  className,
+  ref: forwardedRef,
+  ...rest
+}: HorizontalStepperItemProps & {
+  ref?: React.Ref<HTMLButtonElement | null>;
+}) => {
   const uniqueId = React.useId();
   const Component = asChild ? Slot : "button";
   const { root } = horizontalStepperItemVariants({ state });
@@ -111,7 +117,7 @@ const HorizontalStepperItem = React.forwardRef<
     sharedProps,
     [HORIZONTAL_STEPPER_ITEM_INDICATOR_NAME],
     uniqueId,
-    asChild,
+    asChild
   );
 
   return (
@@ -123,7 +129,7 @@ const HorizontalStepperItem = React.forwardRef<
       {extendedChildren}
     </Component>
   );
-});
+};
 HorizontalStepperItem.displayName = HORIZONTAL_STEPPER_ITEM_NAME;
 
 function HorizontalStepperItemIndicator({

@@ -1,6 +1,6 @@
 // AlignUI DigitInput v0.0.0
 
-import * as React from "react";
+import type * as React from "react";
 
 import OtpInput, { type OTPInputProps } from "react-otp-input";
 
@@ -37,12 +37,14 @@ function DigitInput({
 }
 DigitInput.displayName = "DigitInput";
 
-const DigitInputSlot = React.forwardRef<
-  React.ComponentRef<"input">,
-  React.ComponentPropsWithoutRef<"input"> & {
-    hasError?: boolean;
-  }
->(({ className, hasError, ...rest }, forwardedRef) => {
+const DigitInputSlot = ({
+  className,
+  hasError,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithRef<"input"> & {
+  hasError?: boolean;
+}) => {
   return (
     <input
       className={cn(
@@ -60,13 +62,13 @@ const DigitInputSlot = React.forwardRef<
           "ring-error-base hover:ring-error-base focus:shadow-button-error-focus focus:ring-error-base":
             hasError,
         },
-        className,
+        className
       )}
       ref={forwardedRef}
       {...rest}
     />
   );
-});
+};
 DigitInputSlot.displayName = "DigitInputSlot";
 
 export { DigitInput as Root };
