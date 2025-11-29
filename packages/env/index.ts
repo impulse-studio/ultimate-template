@@ -1,15 +1,10 @@
 import { createEnv } from "@t3-oss/env-nextjs";
-import { config } from "dotenv";
-import path from "path";
 import {
   clientVariables,
   serverVariables,
   type ClientEnv,
   type ServerEnv,
 } from "./variables";
-
-config({ path: path.join(__dirname, "../../.env") });
-config({ path: path.join(__dirname, "../../.env.local") });
 
 type Env = ServerEnv & ClientEnv;
 type RuntimeEnv = Record<keyof ClientEnv, string | undefined>;

@@ -1,5 +1,6 @@
 import type { Config } from "drizzle-kit";
 
+import "@repo/env/load-env";
 import { env } from "@repo/env";
 
 export default {

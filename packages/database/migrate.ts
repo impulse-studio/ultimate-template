@@ -1,3 +1,4 @@
+import "@repo/env/load-env";
 import { migrate } from "drizzle-orm/postgres-js/migrator";
 import { db } from "./index";
 

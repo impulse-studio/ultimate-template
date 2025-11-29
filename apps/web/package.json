@@ -4,6 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "postinstall": "node scripts/link-env.mjs",
     "dev": "next dev --port 3000",
     "prebuild": "pnpm --filter @repo/ui run build",
     "build": "next build",
