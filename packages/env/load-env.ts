@@ -11,4 +11,3 @@ const envDir = path.resolve(process.cwd(), "../../");
 
 config({ path: path.join(envDir, ".env") });
 config({ path: path.join(envDir, ".env.local") });
-
