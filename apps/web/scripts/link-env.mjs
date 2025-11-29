@@ -1,3 +1,4 @@
+/* eslint-disable no-undef, turbo/no-undeclared-env-vars */
 /**
  * Creates symlinks for .env files from monorepo root to apps/web.
  * Runs automatically via postinstall.
