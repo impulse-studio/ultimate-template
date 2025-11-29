@@ -20,20 +20,20 @@ const defaultOptions: Partial<ExternalToast> = {
 const custom: typeof sonnerToast.custom = (render, options) =>
   sonnerToast.custom(render, { ...defaultOptions, ...options });
 
-const information: typeof sonnerToast.info = (message, opts) =>
-  sonnerToast.info(message, { ...defaultOptions, ...opts });
+const information: typeof sonnerToast.info = (msg, opts) =>
+  sonnerToast.info(msg, { ...defaultOptions, ...opts });
 
-const info: typeof sonnerToast.info = (message, opts) =>
-  sonnerToast.info(message, { ...defaultOptions, ...opts });
+const info: typeof sonnerToast.info = (msg, opts) =>
+  sonnerToast.info(msg, { ...defaultOptions, ...opts });
 
-const success: typeof sonnerToast.success = (message, opts) =>
-  sonnerToast.success(message, { ...defaultOptions, ...opts });
+const success: typeof sonnerToast.success = (msg, opts) =>
+  sonnerToast.success(msg, { ...defaultOptions, ...opts });
 
-const error: typeof sonnerToast.error = (message, opts) =>
-  sonnerToast.error(message, { ...defaultOptions, ...opts });
+const error: typeof sonnerToast.error = (msg, opts) =>
+  sonnerToast.error(msg, { ...defaultOptions, ...opts });
 
-const warning: typeof sonnerToast.warning = (message, opts) =>
-  sonnerToast.warning(message, { ...defaultOptions, ...opts });
+const warning: typeof sonnerToast.warning = (msg, opts) =>
+  sonnerToast.warning(msg, { ...defaultOptions, ...opts });
 
 const message: typeof sonnerToast.message = (msg, opts) =>
   sonnerToast.message(msg, { ...defaultOptions, ...opts });
@@ -50,7 +50,7 @@ type PromiseReturn<T> =
 
 const promise: typeof sonnerToast.promise = <ToastData,>(
   promiseT: Parameters<typeof sonnerToast.promise<ToastData>>[0],
-  data?: Parameters<typeof sonnerToast.promise<ToastData>>[1],
+  data?: Parameters<typeof sonnerToast.promise<ToastData>>[1]
 ) => {
   const actualPromise: Promise<ToastData> =
     typeof promiseT === "function"
@@ -58,7 +58,7 @@ const promise: typeof sonnerToast.promise = <ToastData,>(
       : (promiseT as Promise<ToastData>);
 
   const toastId: string | number =
-    (data && "id" in data && data.id != null ? data.id : undefined) ??
+    (data && "id" in data && data.id !== null ? data.id : undefined) ??
     Math.random().toString(36).slice(2);
 
   sonnerToast.custom(
@@ -76,7 +76,7 @@ const promise: typeof sonnerToast.promise = <ToastData,>(
       ...defaultOptions,
       duration: Number.POSITIVE_INFINITY,
       id: toastId,
-    },
+    }
   );
 
   const wrappedId = Object.assign(toastId, {
@@ -108,13 +108,13 @@ const promise: typeof sonnerToast.promise = <ToastData,>(
           ...defaultOptions,
           id: toastId,
           duration: 4000,
-        },
+        }
       );
     })
-    .catch((error) => {
+    .catch((err) => {
       const errorMessage =
         typeof data?.error === "function"
-          ? data.error(error)
+          ? data.error(err)
           : (data?.error ?? "Something went wrong");
 
       sonnerToast.custom(
@@ -135,7 +135,7 @@ const promise: typeof sonnerToast.promise = <ToastData,>(
           ...defaultOptions,
           id: toastId,
           duration: 4000,
-        },
+        }
       );
     });
 
@@ -160,23 +160,23 @@ const Toaster = ConfiguredToaster;
 type ToastOverrides = {
   success: (
     message: Parameters<typeof sonnerToast.success>[0],
-    opts?: Parameters<typeof sonnerToast.success>[1],
+    opts?: Parameters<typeof sonnerToast.success>[1]
   ) => string | number;
   error: (
     message: Parameters<typeof sonnerToast.error>[0],
-    opts?: Parameters<typeof sonnerToast.error>[1],
+    opts?: Parameters<typeof sonnerToast.error>[1]
   ) => string | number;
   warning: (
     message: Parameters<typeof sonnerToast.warning>[0],
-    opts?: Parameters<typeof sonnerToast.warning>[1],
+    opts?: Parameters<typeof sonnerToast.warning>[1]
   ) => string | number;
   info: (
     message: Parameters<typeof sonnerToast.info>[0],
-    opts?: Parameters<typeof sonnerToast.info>[1],
+    opts?: Parameters<typeof sonnerToast.info>[1]
   ) => string | number;
   information: (
     message: Parameters<typeof sonnerToast.info>[0],
-    opts?: Parameters<typeof sonnerToast.info>[1],
+    opts?: Parameters<typeof sonnerToast.info>[1]
   ) => string | number;
   promise: typeof promise;
 };
@@ -190,58 +190,58 @@ const normalizeMessage = (m: SonnerMessage): React.ReactNode =>
 
 const toast = baseToast as ToastType;
 
-toast.success = (message, opts) =>
+toast.success = (msg, opts) =>
   sonnerToast.custom(
     (t) => (
       <AlertToast
-        message={normalizeMessage(message)}
+        message={normalizeMessage(msg)}
         status="success"
         t={t}
         variant="lighter"
       />
     ),
-    { ...defaultOptions, ...opts },
+    { ...defaultOptions, ...opts }
   );
 
-toast.error = (message, opts) =>
+toast.error = (msg, opts) =>
   sonnerToast.custom(
     (t) => (
       <AlertToast
-        message={normalizeMessage(message)}
+        message={normalizeMessage(msg)}
         status="error"
         t={t}
         variant="lighter"
       />
     ),
-    { ...defaultOptions, ...opts },
+    { ...defaultOptions, ...opts }
   );
 
-toast.warning = (message, opts) =>
+toast.warning = (msg, opts) =>
   sonnerToast.custom(
     (t) => (
       <AlertToast
-        message={normalizeMessage(message)}
+        message={normalizeMessage(msg)}
         status="warning"
         t={t}
         variant="lighter"
       />
     ),
-    { ...defaultOptions, ...opts },
+    { ...defaultOptions, ...opts }
   );
 
-toast.info = (message, opts) =>
+toast.info = (msg, opts) =>
   sonnerToast.custom(
     (t) => (
       <AlertToast
-        message={normalizeMessage(message)}
+        message={normalizeMessage(msg)}
         status="information"
         t={t}
         variant="lighter"
       />
     ),
-    { ...defaultOptions, ...opts },
+    { ...defaultOptions, ...opts }
   );
 
-toast.information = (message, opts) => toast.info(message, opts);
+toast.information = (msg, opts) => toast.info(msg, opts);
 
 export { toast, Toaster };

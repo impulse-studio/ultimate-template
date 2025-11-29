@@ -1,5 +1,5 @@
-import { headers } from "next/headers";
 import { auth } from "@repo/database/auth/server";
+import { headers } from "next/headers";
 
 export async function getServerSession() {
   const session = await auth.api.getSession({

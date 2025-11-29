@@ -4,7 +4,7 @@
     "verbatimModuleSyntax": false,
     "baseUrl": ".",
     "types": ["node"],
-    "outDir": "dist",
+    "outDir": "dist"
   },
   "include": ["src"],
   "exclude": ["dist", "node_modules"]

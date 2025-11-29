@@ -1,13 +1,12 @@
 import { Heading, Link, Section, Text } from "@react-email/components";
-import type { ReactNode } from "react";
-
 import { PROJECT } from "@repo/env/constants";
 import { cn } from "@repo/ui/utils/cn";
+import type { ReactNode } from "react";
 
-interface EmailTextProps {
+type EmailTextProps = {
   children: ReactNode;
   className?: string;
-}
+};
 
 export function EmailHeading({ children, className }: EmailTextProps) {
   return (
@@ -27,7 +26,7 @@ export function EmailText({ children, className }: EmailTextProps) {
   );
 }
 
-interface EmailFooterProps {
+type EmailFooterProps = {
   className?: string;
   twitterLink?: string;
   linkedinLink?: string;
@@ -35,7 +34,7 @@ interface EmailFooterProps {
   privacyLink?: string;
   termsLink?: string;
   children?: ReactNode;
-}
+};
 
 export function EmailFooter({
   className,
@@ -48,7 +47,7 @@ export function EmailFooter({
   return (
     <Section className="mt-6">
       <div className="mb-4 text-center">
-        {twitterLink && (
+        {!!twitterLink && (
           <>
             <Link className="mx-2 text-gray-400 text-xs" href={twitterLink}>
               {"Twitter"}
@@ -59,7 +58,7 @@ export function EmailFooter({
           </>
         )}
 
-        {linkedinLink && (
+        {!!linkedinLink && (
           <>
             <Link className="mx-2 text-gray-400 text-xs" href={linkedinLink}>
               {"LinkedIn"}
@@ -70,12 +69,12 @@ export function EmailFooter({
           </>
         )}
 
-        {docsLink && (
+        {!!docsLink && (
           <>
             <Link className="mx-2 text-gray-400 text-xs" href={docsLink}>
               {"Docs"}
             </Link>
-            {(privacyLink || termsLink) && (
+            {(!!privacyLink || !!termsLink) && (
               <Text className="mx-1 inline-block text-gray-400 text-xs">
                 {"•"}
               </Text>
@@ -83,12 +82,12 @@ export function EmailFooter({
           </>
         )}
 
-        {privacyLink && (
+        {!!privacyLink && (
           <>
             <Link className="mx-2 text-gray-400 text-xs" href={privacyLink}>
               {"Privacy"}
             </Link>
-            {termsLink && (
+            {!!termsLink && (
               <Text className="mx-1 inline-block text-gray-400 text-xs">
                 {"•"}
               </Text>
@@ -96,7 +95,7 @@ export function EmailFooter({
           </>
         )}
 
-        {termsLink && (
+        {!!termsLink && (
           <Link className="mx-2 text-gray-400 text-xs" href={termsLink}>
             {"Terms"}
           </Link>

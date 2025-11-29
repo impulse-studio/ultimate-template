@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { readFileSync, writeFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const validTypes = new Set(["major", "minor", "patch"]);
 
@@ -21,20 +21,23 @@ function parseArgs() {
   return "";
 }
 
-function incrementVersion(currentVersion, releaseType) {
-  const versionParts = currentVersion.split(".").map((part) => Number(part));
-  if (versionParts.length !== 3 || versionParts.some((value) => Number.isNaN(value))) {
-    throw new Error(`Invalid version ${currentVersion}`);
+function incrementVersion(version, type) {
+  const versionParts = version.split(".").map((part) => Number(part));
+  if (
+    versionParts.length !== 3 ||
+    versionParts.some((value) => Number.isNaN(value))
+  ) {
+    throw new Error(`Invalid version ${version}`);
   }
 
-  if (releaseType === "major") {
+  if (type === "major") {
     versionParts[0] += 1;
     versionParts[1] = 0;
     versionParts[2] = 0;
     return versionParts.join(".");
   }
 
-  if (releaseType === "minor") {
+  if (type === "minor") {
     versionParts[1] += 1;
     versionParts[2] = 0;
     return versionParts.join(".");
@@ -49,12 +52,14 @@ function updateRootPackage(newVersion) {
   const rootPath = path.resolve(currentDir, "../../package.json");
   const packageJson = JSON.parse(readFileSync(rootPath, "utf8"));
   packageJson.version = newVersion;
-  writeFileSync(rootPath, JSON.stringify(packageJson, null, 2) + "\n");
+  writeFileSync(rootPath, `${JSON.stringify(packageJson, null, 2)}\n`);
 }
 
 const releaseType = parseArgs();
 if (!validTypes.has(releaseType)) {
-  throw new Error(`Release type must be one of ${Array.from(validTypes).join(", ")}`);
+  throw new Error(
+    `Release type must be one of ${Array.from(validTypes).join(", ")}`
+  );
 }
 
 const currentDir = path.dirname(fileURLToPath(import.meta.url));
@@ -64,4 +69,3 @@ const currentVersion = packageJson.version ?? "0.0.0";
 const nextVersion = incrementVersion(currentVersion, releaseType);
 updateRootPackage(nextVersion);
 console.log(nextVersion);
-

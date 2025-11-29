@@ -1,6 +1,6 @@
+@import "tailwindcss";
 @source "./ui/**/*.{ts,tsx}";
 @source "./hooks/**/*.{ts,tsx}";
-@import "tailwindcss";
 
 @theme {
   /* AlignUI Raw Colors */

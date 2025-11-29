@@ -81,40 +81,43 @@ type TagProps = VariantProps<typeof tagVariants> &
     asChild?: boolean;
   };
 
-const TagRoot = React.forwardRef<HTMLDivElement, TagProps>(
-  (
-    { asChild, children, variant, disabled, className, ...rest },
-    forwardedRef,
-  ) => {
-    const uniqueId = React.useId();
-    const Component = asChild ? Slot : "div";
-    const { root } = tagVariants({ variant, disabled });
+const TagRoot = ({
+  asChild,
+  children,
+  variant,
+  disabled,
+  className,
+  ref: forwardedRef,
+  ...rest
+}: TagProps & { ref?: React.Ref<HTMLDivElement | null> }) => {
+  const uniqueId = React.useId();
+  const Component = asChild ? Slot : "div";
+  const { root } = tagVariants({ variant, disabled });
 
-    const sharedProps: TagSharedProps = {
-      variant,
-      disabled,
-    };
+  const sharedProps: TagSharedProps = {
+    variant,
+    disabled,
+  };
 
-    const extendedChildren = recursiveCloneChildren(
-      children as React.ReactElement[],
-      sharedProps,
-      [TAG_ICON_NAME, TAG_DISMISS_BUTTON_NAME, TAG_DISMISS_ICON_NAME],
-      uniqueId,
-      asChild,
-    );
+  const extendedChildren = recursiveCloneChildren(
+    children as React.ReactElement[],
+    sharedProps,
+    [TAG_ICON_NAME, TAG_DISMISS_BUTTON_NAME, TAG_DISMISS_ICON_NAME],
+    uniqueId,
+    asChild
+  );
 
-    return (
-      <Component
-        aria-disabled={disabled}
-        className={root({ class: className })}
-        ref={forwardedRef}
-        {...rest}
-      >
-        {extendedChildren}
-      </Component>
-    );
-  },
-);
+  return (
+    <Component
+      aria-disabled={disabled}
+      className={root({ class: className })}
+      ref={forwardedRef}
+      {...rest}
+    >
+      {extendedChildren}
+    </Component>
+  );
+};
 TagRoot.displayName = TAG_ROOT_NAME;
 
 function TagIcon<T extends React.ElementType>({
@@ -136,34 +139,36 @@ type TagDismissButtonProps = TagSharedProps &
     asChild?: boolean;
   };
 
-const TagDismissButton = React.forwardRef<
-  HTMLButtonElement,
-  TagDismissButtonProps
->(
-  (
-    { asChild, children, className, variant, disabled, ...rest },
-    forwardedRef,
-  ) => {
-    const Component = asChild ? Slot : "button";
-    const { dismissButton } = tagVariants({ variant, disabled });
+const TagDismissButton = ({
+  asChild,
+  children,
+  className,
+  variant,
+  disabled,
+  ref: forwardedRef,
+  ...rest
+}: TagDismissButtonProps & {
+  ref?: React.Ref<HTMLButtonElement | null>;
+}) => {
+  const Component = asChild ? Slot : "button";
+  const { dismissButton } = tagVariants({ variant, disabled });
 
-    return (
-      <Component
-        className={dismissButton({ class: className })}
-        ref={forwardedRef}
-        {...rest}
-      >
-        {children ?? (
-          <TagDismissIcon
-            as={RiCloseFill}
-            disabled={disabled}
-            variant={variant}
-          />
-        )}
-      </Component>
-    );
-  },
-);
+  return (
+    <Component
+      className={dismissButton({ class: className })}
+      ref={forwardedRef}
+      {...rest}
+    >
+      {children ?? (
+        <TagDismissIcon
+          as={RiCloseFill}
+          disabled={disabled}
+          variant={variant}
+        />
+      )}
+    </Component>
+  );
+};
 TagDismissButton.displayName = TAG_DISMISS_BUTTON_NAME;
 
 function TagDismissIcon<T extends React.ElementType>({

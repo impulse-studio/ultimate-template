@@ -140,62 +140,58 @@ export type AvatarRootProps = VariantProps<typeof avatarVariants> &
     placeholderType?: "user" | "company";
   };
 
-const AvatarRoot = React.forwardRef<HTMLDivElement, AvatarRootProps>(
-  (
-    {
-      asChild,
-      children,
-      size,
-      color,
-      className,
-      placeholderType = "user",
-      ...rest
-    },
-    forwardedRef,
-  ) => {
-    const uniqueId = React.useId();
-    const Component = asChild ? Slot : "div";
-    const { root } = avatarVariants({ size, color });
+const AvatarRoot = ({
+  asChild,
+  children,
+  size,
+  color,
+  className,
+  placeholderType = "user",
+  ref: forwardedRef,
+  ...rest
+}: AvatarRootProps & { ref?: React.Ref<HTMLDivElement | null> }) => {
+  const uniqueId = React.useId();
+  const Component = asChild ? Slot : "div";
+  const { root } = avatarVariants({ size, color });
 
-    const sharedProps: AvatarSharedProps = {
-      size,
-      color,
-    };
+  const sharedProps: AvatarSharedProps = {
+    size,
+    color,
+  };
 
-    // use placeholder icon if no children provided
-    if (!children) {
-      return (
-        <div className={root({ class: className })} {...rest}>
-          <AvatarImage asChild>
-            {placeholderType === "company" ? (
-              <IconEmptyCompany />
-            ) : (
-              <IconEmptyUser />
-            )}
-          </AvatarImage>
-        </div>
-      );
-    }
-
-    const extendedChildren = recursiveCloneChildren(
-      children as React.ReactElement[],
-      sharedProps,
-      [AVATAR_IMAGE_NAME, AVATAR_INDICATOR_NAME],
-      uniqueId,
-      asChild,
-    );
-
+  // use placeholder icon if no children provided
+  if (!children) {
     return (
-      <Component
-        className={root({ class: className })}
-        ref={forwardedRef}
-        {...rest}
-      >
-        {extendedChildren}
-      </Component>
+      <div className={root({ class: className })} {...rest}>
+        <AvatarImage asChild>
+          {placeholderType === "company" ? (
+            <IconEmptyCompany />
+          ) : (
+            <IconEmptyUser />
+          )}
+        </AvatarImage>
+      </div>
     );
-  },
-);
+  }
+
+  const extendedChildren = recursiveCloneChildren(
+    children as React.ReactElement[],
+    sharedProps,
+    [AVATAR_IMAGE_NAME, AVATAR_INDICATOR_NAME],
+    uniqueId,
+    asChild
+  );
+
+  return (
+    <Component
+      className={root({ class: className })}
+      ref={forwardedRef}
+      {...rest}
+    >
+      {extendedChildren}
+    </Component>
+  );
+};
 AvatarRoot.displayName = AVATAR_ROOT_NAME;
 
 type AvatarImageProps = AvatarSharedProps &
@@ -203,20 +199,25 @@ type AvatarImageProps = AvatarSharedProps &
     asChild?: boolean;
   };
 
-const AvatarImage = React.forwardRef<HTMLImageElement, AvatarImageProps>(
-  ({ asChild, className, size, color, ...rest }, forwardedRef) => {
-    const Component = asChild ? Slot : "img";
-    const { image } = avatarVariants({ size, color });
+const AvatarImage = ({
+  asChild,
+  className,
+  size,
+  color,
+  ref: forwardedRef,
+  ...rest
+}: AvatarImageProps & { ref?: React.Ref<HTMLImageElement | null> }) => {
+  const Component = asChild ? Slot : "img";
+  const { image } = avatarVariants({ size, color });
 
-    return (
-      <Component
-        className={image({ class: className })}
-        ref={forwardedRef}
-        {...rest}
-      />
-    );
-  },
-);
+  return (
+    <Component
+      className={image({ class: className })}
+      ref={forwardedRef}
+      {...rest}
+    />
+  );
+};
 AvatarImage.displayName = AVATAR_IMAGE_NAME;
 
 function AvatarIndicator({
@@ -277,23 +278,27 @@ type AvatarBrandLogoProps = React.ImgHTMLAttributes<HTMLImageElement> & {
   asChild?: boolean;
 };
 
-const AvatarBrandLogo = React.forwardRef<
-  HTMLImageElement,
-  AvatarBrandLogoProps
->(({ asChild, className, ...rest }, forwardedRef) => {
+const AvatarBrandLogo = ({
+  asChild,
+  className,
+  ref: forwardedRef,
+  ...rest
+}: AvatarBrandLogoProps & {
+  ref?: React.Ref<HTMLImageElement | null>;
+}) => {
   const Component = asChild ? Slot : "img";
 
   return (
     <Component
       className={cn(
         "box-content size-6 rounded-full border-2 border-bg-white-0",
-        className,
+        className
       )}
       ref={forwardedRef}
       {...rest}
     />
   );
-});
+};
 AvatarBrandLogo.displayName = AVATAR_BRAND_LOGO_NAME;
 
 function AvatarNotification({
@@ -304,7 +309,7 @@ function AvatarNotification({
     <div
       className={cn(
         "box-content size-3 rounded-full border-2 border-bg-white-0 bg-error-base",
-        className,
+        className
       )}
       {...rest}
     />

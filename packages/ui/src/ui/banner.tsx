@@ -252,7 +252,7 @@ function Banner({
     children as React.ReactElement[],
     sharedProps,
     [BANNER_ICON_NAME, BANNER_CLOSE_BUTTON_NAME],
-    uniqueId,
+    uniqueId
   );
 
   return (
@@ -294,28 +294,30 @@ type BannerCloseButtonProps = BannerSharedProps &
     asChild?: boolean;
   };
 
-const BannerCloseButton = React.forwardRef<
-  HTMLButtonElement,
-  BannerCloseButtonProps
->(
-  (
-    { asChild, children, variant, status, className, ...rest },
-    forwardedRef,
-  ) => {
-    const Component = asChild ? Slot : "button";
-    const { closeButton } = bannerVariants({ variant, status });
+const BannerCloseButton = ({
+  asChild,
+  children,
+  variant,
+  status,
+  className,
+  ref: forwardedRef,
+  ...rest
+}: BannerCloseButtonProps & {
+  ref?: React.Ref<HTMLButtonElement | null>;
+}) => {
+  const Component = asChild ? Slot : "button";
+  const { closeButton } = bannerVariants({ variant, status });
 
-    return (
-      <Component
-        className={closeButton({ class: className })}
-        ref={forwardedRef}
-        {...rest}
-      >
-        {children}
-      </Component>
-    );
-  },
-);
+  return (
+    <Component
+      className={closeButton({ class: className })}
+      ref={forwardedRef}
+      {...rest}
+    >
+      {children}
+    </Component>
+  );
+};
 BannerCloseButton.displayName = BANNER_CLOSE_BUTTON_NAME;
 
 export {

@@ -65,7 +65,7 @@ function DotStepperRoot({
     sharedProps,
     [DOT_STEPPER_ITEM_NAME],
     uniqueId,
-    asChild,
+    asChild
   );
 
   return (
@@ -82,22 +82,29 @@ type DotStepperItemProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
     active?: boolean;
   };
 
-const DotStepperItem = React.forwardRef<HTMLButtonElement, DotStepperItemProps>(
-  ({ asChild, size, className, active, ...rest }, forwardedRef) => {
-    const Component = asChild ? Slot : "button";
-    const { item } = dotStepperVariants({ size });
+const DotStepperItem = ({
+  asChild,
+  size,
+  className,
+  active,
+  ref: forwardedRef,
+  ...rest
+}: DotStepperItemProps & {
+  ref?: React.Ref<HTMLButtonElement | null>;
+}) => {
+  const Component = asChild ? Slot : "button";
+  const { item } = dotStepperVariants({ size });
 
-    return (
-      <Component
-        className={cn(item({ class: className }), {
-          "bg-primary-base": active,
-        })}
-        ref={forwardedRef}
-        {...rest}
-      />
-    );
-  },
-);
+  return (
+    <Component
+      className={cn(item({ class: className }), {
+        "bg-primary-base": active,
+      })}
+      ref={forwardedRef}
+      {...rest}
+    />
+  );
+};
 DotStepperItem.displayName = DOT_STEPPER_ITEM_NAME;
 
 export { DotStepperRoot as Root, DotStepperItem as Item };

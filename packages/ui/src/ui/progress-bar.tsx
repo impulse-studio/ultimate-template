@@ -1,6 +1,6 @@
 // AlignUI ProgressBar v0.0.0
 
-import * as React from "react";
+import type * as React from "react";
 
 import { tv, type VariantProps } from "@/utils/tv";
 
@@ -36,26 +36,31 @@ type ProgressBarRootProps = React.HTMLAttributes<HTMLDivElement> &
     max?: number;
   };
 
-const ProgressBarRoot = React.forwardRef<HTMLDivElement, ProgressBarRootProps>(
-  ({ className, color, value = 0, max = 100, ...rest }, forwardedRef) => {
-    const { root, progress } = progressBarVariants({ color });
-    const safeValue = Math.min(max, Math.max(value, 0));
+const ProgressBarRoot = ({
+  className,
+  color,
+  value = 0,
+  max = 100,
+  ref: forwardedRef,
+  ...rest
+}: ProgressBarRootProps & { ref?: React.Ref<HTMLDivElement | null> }) => {
+  const { root, progress } = progressBarVariants({ color });
+  const safeValue = Math.min(max, Math.max(value, 0));
 
-    return (
-      <div className={root({ class: className })} ref={forwardedRef} {...rest}>
-        <div
-          aria-valuemax={max}
-          aria-valuenow={value}
-          className={progress()}
-          role="progressbar"
-          style={{
-            width: `${(safeValue / max) * 100}%`,
-          }}
-        />
-      </div>
-    );
-  },
-);
+  return (
+    <div className={root({ class: className })} ref={forwardedRef} {...rest}>
+      <div
+        aria-valuemax={max}
+        aria-valuenow={value}
+        className={progress()}
+        role="progressbar"
+        style={{
+          width: `${(safeValue / max) * 100}%`,
+        }}
+      />
+    </div>
+  );
+};
 ProgressBarRoot.displayName = "ProgressBarRoot";
 
 export { ProgressBarRoot as Root };

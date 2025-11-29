@@ -8,11 +8,11 @@ import { EmailButton } from "./components/email-button";
 import { EmailLayout } from "./components/email-layout";
 import { EmailFooter, EmailHeading, EmailText } from "./components/email-text";
 
-export interface ChangeEmailTemplateProps {
+export type ChangeEmailTemplateProps = {
   url: string;
   name?: string;
   newEmail: string;
-}
+};
 
 export default function ChangeEmailTemplate({
   url,

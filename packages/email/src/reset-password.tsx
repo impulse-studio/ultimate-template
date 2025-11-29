@@ -6,11 +6,11 @@ import { EmailButton } from "./components/email-button";
 import { EmailLayout } from "./components/email-layout";
 import { EmailFooter, EmailHeading, EmailText } from "./components/email-text";
 
-export interface ResetPasswordTemplateProps {
+export type ResetPasswordTemplateProps = {
   name: string;
   url: string;
   host: string;
-}
+};
 
 export default function ResetPasswordTemplate({
   name,

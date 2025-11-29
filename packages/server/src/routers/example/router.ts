@@ -5,7 +5,8 @@ import { getExampleBase, getExampleHandler } from "./queries";
 export const exampleRouter = base.router({
   getExample: getExampleBase
     .route({ method: "GET" })
-    .handler(async ({ input, context }) => {
-      return await call(getExampleHandler, input, { context });
-    }),
+    .handler(
+      async ({ input, context }) =>
+        await call(getExampleHandler, input, { context })
+    ),
 });

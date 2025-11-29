@@ -14,27 +14,36 @@ import type { PolymorphicComponentProps } from "@/utils/polymorphic";
 const TabMenuHorizontalContent = TabsPrimitive.Content;
 TabMenuHorizontalContent.displayName = "TabMenuHorizontalContent";
 
-const TabMenuHorizontalRoot = React.forwardRef<
-  React.ComponentRef<typeof TabsPrimitive.Root>,
-  Omit<React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root>, "orientation">
->(({ className, ...rest }, forwardedRef) => {
-  return (
-    <TabsPrimitive.Root
-      className={cn("w-full", className)}
-      orientation="horizontal"
-      ref={forwardedRef}
-      {...rest}
-    />
-  );
-});
+const TabMenuHorizontalRoot = ({
+  className,
+  ref: forwardedRef,
+  ...rest
+}: Omit<
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root>,
+  "orientation"
+> & {
+  ref?: React.Ref<React.ComponentRef<typeof TabsPrimitive.Root> | null>;
+}) => (
+  <TabsPrimitive.Root
+    className={cn("w-full", className)}
+    orientation="horizontal"
+    ref={forwardedRef}
+    {...rest}
+  />
+);
 TabMenuHorizontalRoot.displayName = "TabMenuHorizontalRoot";
 
-const TabMenuHorizontalList = React.forwardRef<
-  React.ComponentRef<typeof TabsPrimitive.List>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List> & {
-    wrapperClassName?: string;
-  }
->(({ children, className, wrapperClassName, ...rest }, forwardedRef) => {
+const TabMenuHorizontalList = ({
+  children,
+  className,
+  wrapperClassName,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof TabsPrimitive.List> & {
+  wrapperClassName?: string;
+} & {
+  ref?: React.Ref<React.ComponentRef<typeof TabsPrimitive.List> | null>;
+}) => {
   const [lineStyle, setLineStyle] = React.useState({ width: 0, left: 0 });
   const listWrapperRef = React.useRef<HTMLDivElement>(null);
 
@@ -60,14 +69,14 @@ const TabMenuHorizontalList = React.forwardRef<
     <div
       className={cn(
         "scrollbar-hide relative grid overflow-x-auto overflow-y-hidden overscroll-contain",
-        wrapperClassName,
+        wrapperClassName
       )}
       ref={listWrapperRef}
     >
       <TabsPrimitive.List
         className={cn(
           "group/tab-list relative flex h-12 items-center gap-6 whitespace-nowrap border-stroke-soft-200 border-y",
-          className,
+          className
         )}
         ref={mergeRefs(forwardedRef, listRef)}
         {...rest}
@@ -81,7 +90,7 @@ const TabMenuHorizontalList = React.forwardRef<
             "-bottom-px absolute left-0 h-0.5 bg-primary-base opacity-0 transition-all duration-300 group-has-[[data-state=active]]/tab-list:opacity-100",
             {
               hidden: !mounted,
-            },
+            }
           )}
           style={{
             transform: `translate3d(${lineStyle.left}px, 0, 0)`,
@@ -92,13 +101,16 @@ const TabMenuHorizontalList = React.forwardRef<
       </TabsPrimitive.List>
     </div>
   );
-});
+};
 TabMenuHorizontalList.displayName = "TabMenuHorizontalList";
 
-const TabMenuHorizontalTrigger = React.forwardRef<
-  React.ComponentRef<typeof TabsPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
->(({ className, ...rest }, forwardedRef) => {
+const TabMenuHorizontalTrigger = ({
+  className,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger> & {
+  ref?: React.Ref<React.ComponentRef<typeof TabsPrimitive.Trigger> | null>;
+}) => {
   return (
     <TabsPrimitive.Trigger
       className={cn(
@@ -110,13 +122,13 @@ const TabMenuHorizontalTrigger = React.forwardRef<
         "focus:outline-none",
         // active
         "data-[state=active]:text-text-strong-950",
-        className,
+        className
       )}
       ref={forwardedRef}
       {...rest}
     />
   );
-});
+};
 TabMenuHorizontalTrigger.displayName = "TabMenuHorizontalTrigger";
 
 function TabMenuHorizontalIcon<T extends React.ElementType>({
@@ -134,7 +146,7 @@ function TabMenuHorizontalIcon<T extends React.ElementType>({
         "transition duration-200 ease-out",
         // active
         "group-data-[state=active]/tab-item:text-primary-base",
-        className,
+        className
       )}
       {...rest}
     />

@@ -88,10 +88,16 @@ type VerticalStepperItemProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
     asChild?: boolean;
   };
 
-const VerticalStepperItem = React.forwardRef<
-  HTMLButtonElement,
-  VerticalStepperItemProps
->(({ asChild, children, state, className, ...rest }, forwardedRef) => {
+const VerticalStepperItem = ({
+  asChild,
+  children,
+  state,
+  className,
+  ref: forwardedRef,
+  ...rest
+}: VerticalStepperItemProps & {
+  ref?: React.Ref<HTMLButtonElement | null>;
+}) => {
   const uniqueId = React.useId();
   const Component = asChild ? Slot : "button";
   const { root } = verticalStepperItemVariants({ state });
@@ -105,7 +111,7 @@ const VerticalStepperItem = React.forwardRef<
     sharedProps,
     [VERTICAL_STEPPER_ITEM_INDICATOR_NAME],
     uniqueId,
-    asChild,
+    asChild
   );
 
   return (
@@ -117,7 +123,7 @@ const VerticalStepperItem = React.forwardRef<
       {extendedChildren}
     </Component>
   );
-});
+};
 VerticalStepperItem.displayName = VERTICAL_STEPPER_ITEM_NAME;
 
 function VerticalStepperItemIndicator({

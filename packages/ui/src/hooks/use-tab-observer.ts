@@ -2,9 +2,9 @@
 
 import * as React from "react";
 
-interface TabObserverOptions {
+type TabObserverOptions = {
   onActiveTabChange?: (index: number, element: HTMLElement) => void;
-}
+};
 
 export function useTabObserver({ onActiveTabChange }: TabObserverOptions = {}) {
   const [mounted, setMounted] = React.useState(false);

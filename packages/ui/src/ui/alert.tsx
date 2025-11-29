@@ -235,36 +235,40 @@ export type AlertProps = VariantProps<typeof alertVariants> &
     wrapperClassName?: ClassValue;
   };
 
-const AlertRoot = React.forwardRef<HTMLDivElement, AlertProps>(
-  (
-    { children, className, wrapperClassName, size, variant, status, ...rest },
-    forwardedRef,
-  ) => {
-    const uniqueId = React.useId();
-    const { root, wrapper } = alertVariants({ size, variant, status });
+const AlertRoot = ({
+  children,
+  className,
+  wrapperClassName,
+  size,
+  variant,
+  status,
+  ref: forwardedRef,
+  ...rest
+}: AlertProps & { ref?: React.Ref<HTMLDivElement | null> }) => {
+  const uniqueId = React.useId();
+  const { root, wrapper } = alertVariants({ size, variant, status });
 
-    const sharedProps: AlertSharedProps = {
-      size,
-      variant,
-      status,
-    };
+  const sharedProps: AlertSharedProps = {
+    size,
+    variant,
+    status,
+  };
 
-    const extendedChildren = recursiveCloneChildren(
-      children as React.ReactElement[],
-      sharedProps,
-      [ALERT_ICON_NAME, ALERT_CLOSE_ICON_NAME],
-      uniqueId,
-    );
+  const extendedChildren = recursiveCloneChildren(
+    children as React.ReactElement[],
+    sharedProps,
+    [ALERT_ICON_NAME, ALERT_CLOSE_ICON_NAME],
+    uniqueId
+  );
 
-    return (
-      <div className={root({ class: className })} ref={forwardedRef} {...rest}>
-        <div className={wrapper({ class: wrapperClassName })}>
-          {extendedChildren}
-        </div>
+  return (
+    <div className={root({ class: className })} ref={forwardedRef} {...rest}>
+      <div className={wrapper({ class: wrapperClassName })}>
+        {extendedChildren}
       </div>
-    );
-  },
-);
+    </div>
+  );
+};
 AlertRoot.displayName = ALERT_ROOT_NAME;
 
 function AlertIcon<T extends React.ElementType>({

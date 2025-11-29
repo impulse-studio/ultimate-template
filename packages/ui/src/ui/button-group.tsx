@@ -84,35 +84,40 @@ type ButtonGroupRootProps = VariantProps<typeof buttonGroupVariants> &
     asChild?: boolean;
   };
 
-const ButtonGroupRoot = React.forwardRef<HTMLDivElement, ButtonGroupRootProps>(
-  ({ asChild, children, className, size, ...rest }, forwardedRef) => {
-    const uniqueId = React.useId();
-    const Component = asChild ? Slot : "div";
-    const { root } = buttonGroupVariants({ size });
+const ButtonGroupRoot = ({
+  asChild,
+  children,
+  className,
+  size,
+  ref: forwardedRef,
+  ...rest
+}: ButtonGroupRootProps & { ref?: React.Ref<HTMLDivElement | null> }) => {
+  const uniqueId = React.useId();
+  const Component = asChild ? Slot : "div";
+  const { root } = buttonGroupVariants({ size });
 
-    const sharedProps: ButtonGroupSharedProps = {
-      size,
-    };
+  const sharedProps: ButtonGroupSharedProps = {
+    size,
+  };
 
-    const extendedChildren = recursiveCloneChildren(
-      children as React.ReactElement[],
-      sharedProps,
-      [BUTTON_GROUP_ITEM_NAME, BUTTON_GROUP_ICON_NAME],
-      uniqueId,
-      asChild,
-    );
+  const extendedChildren = recursiveCloneChildren(
+    children as React.ReactElement[],
+    sharedProps,
+    [BUTTON_GROUP_ITEM_NAME, BUTTON_GROUP_ICON_NAME],
+    uniqueId,
+    asChild
+  );
 
-    return (
-      <Component
-        className={root({ class: className })}
-        ref={forwardedRef}
-        {...rest}
-      >
-        {extendedChildren}
-      </Component>
-    );
-  },
-);
+  return (
+    <Component
+      className={root({ class: className })}
+      ref={forwardedRef}
+      {...rest}
+    >
+      {extendedChildren}
+    </Component>
+  );
+};
 ButtonGroupRoot.displayName = BUTTON_GROUP_ROOT_NAME;
 
 type ButtonGroupItemProps = ButtonGroupSharedProps &
@@ -120,10 +125,16 @@ type ButtonGroupItemProps = ButtonGroupSharedProps &
     asChild?: boolean;
   };
 
-const ButtonGroupItem = React.forwardRef<
-  HTMLButtonElement,
-  ButtonGroupItemProps
->(({ children, className, size, asChild, ...rest }, forwardedRef) => {
+const ButtonGroupItem = ({
+  children,
+  className,
+  size,
+  asChild,
+  ref: forwardedRef,
+  ...rest
+}: ButtonGroupItemProps & {
+  ref?: React.Ref<HTMLButtonElement | null>;
+}) => {
   const Component = asChild ? Slot : "button";
   const { item } = buttonGroupVariants({ size });
 
@@ -136,7 +147,7 @@ const ButtonGroupItem = React.forwardRef<
       {children}
     </Component>
   );
-});
+};
 ButtonGroupItem.displayName = BUTTON_GROUP_ITEM_NAME;
 
 function ButtonGroupIcon<T extends React.ElementType>({

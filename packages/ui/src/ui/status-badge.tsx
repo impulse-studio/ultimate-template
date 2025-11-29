@@ -94,39 +94,42 @@ type StatusBadgeRootProps = React.HTMLAttributes<HTMLDivElement> &
     asChild?: boolean;
   };
 
-const StatusBadgeRoot = React.forwardRef<HTMLDivElement, StatusBadgeRootProps>(
-  (
-    { asChild, children, variant, status, className, ...rest },
-    forwardedRef,
-  ) => {
-    const uniqueId = React.useId();
-    const Component = asChild ? Slot : "div";
-    const { root } = statusBadgeVariants({ variant, status });
+const StatusBadgeRoot = ({
+  asChild,
+  children,
+  variant,
+  status,
+  className,
+  ref: forwardedRef,
+  ...rest
+}: StatusBadgeRootProps & { ref?: React.Ref<HTMLDivElement | null> }) => {
+  const uniqueId = React.useId();
+  const Component = asChild ? Slot : "div";
+  const { root } = statusBadgeVariants({ variant, status });
 
-    const sharedProps: StatusBadgeSharedProps = {
-      variant,
-      status,
-    };
+  const sharedProps: StatusBadgeSharedProps = {
+    variant,
+    status,
+  };
 
-    const extendedChildren = recursiveCloneChildren(
-      children as React.ReactElement[],
-      sharedProps,
-      [STATUS_BADGE_ICON_NAME, STATUS_BADGE_DOT_NAME],
-      uniqueId,
-      asChild,
-    );
+  const extendedChildren = recursiveCloneChildren(
+    children as React.ReactElement[],
+    sharedProps,
+    [STATUS_BADGE_ICON_NAME, STATUS_BADGE_DOT_NAME],
+    uniqueId,
+    asChild
+  );
 
-    return (
-      <Component
-        className={root({ class: className })}
-        ref={forwardedRef}
-        {...rest}
-      >
-        {extendedChildren}
-      </Component>
-    );
-  },
-);
+  return (
+    <Component
+      className={root({ class: className })}
+      ref={forwardedRef}
+      {...rest}
+    >
+      {extendedChildren}
+    </Component>
+  );
+};
 StatusBadgeRoot.displayName = STATUS_BADGE_ROOT_NAME;
 
 function StatusBadgeIcon<T extends React.ElementType = "div">({

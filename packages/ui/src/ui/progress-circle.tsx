@@ -1,6 +1,6 @@
 // AlignUI ProgressCircle v0.0.0
 
-import * as React from "react";
+import type * as React from "react";
 
 import { cn } from "@/utils/cn";
 import { tv, type VariantProps } from "@/utils/tv";
@@ -67,77 +67,70 @@ type ProgressCircleRootProps = Omit<React.SVGProps<SVGSVGElement>, "value"> &
     children?: React.ReactNode;
   };
 
-const ProgressCircleRoot = React.forwardRef<
-  SVGSVGElement,
-  ProgressCircleRootProps
->(
-  (
-    {
-      value = 0,
-      max = 100,
-      size,
-      className,
-      children,
-      ...rest
-    }: ProgressCircleRootProps,
-    forwardedRef,
-  ) => {
-    const { text } = progressCircleVariants({ size });
-    const { strokeWidth, radius } = getSizes({ size });
-    const safeValue = Math.min(max, Math.max(value, 0));
-    const normalizedRadius = radius - strokeWidth / 2;
-    const circumference = normalizedRadius * 2 * Math.PI;
-    const offset = circumference - (safeValue / max) * circumference;
+const ProgressCircleRoot = ({
+  value = 0,
+  max = 100,
+  size,
+  className,
+  children,
+  ref: forwardedRef,
+  ...rest
+}: ProgressCircleRootProps) => {
+  const { text } = progressCircleVariants({ size });
+  const { strokeWidth, radius } = getSizes({ size });
+  const safeValue = Math.min(max, Math.max(value, 0));
+  const normalizedRadius = radius - strokeWidth / 2;
+  const circumference = normalizedRadius * 2 * Math.PI;
+  const offset = circumference - (safeValue / max) * circumference;
 
-    return (
-      <div className={cn("relative", className)}>
-        <svg
-          aria-valuemax={max}
-          aria-valuemin={0}
-          aria-valuenow={value}
-          className="-rotate-90"
-          height={radius * 2}
-          ref={forwardedRef}
-          role="progressbar"
-          viewBox={`0 0 ${radius * 2} ${radius * 2}`}
-          width={radius * 2}
-          {...rest}
-        >
+  return (
+    <div className={cn("relative", className)}>
+      <svg
+        aria-valuemax={max}
+        aria-valuemin={0}
+        aria-valuenow={value}
+        className="-rotate-90"
+        height={radius * 2}
+        ref={forwardedRef}
+        role="progressbar"
+        viewBox={`0 0 ${radius * 2} ${radius * 2}`}
+        width={radius * 2}
+        {...rest}
+      >
+        <circle
+          className="stroke-bg-soft-200"
+          cx={radius}
+          cy={radius}
+          fill="none"
+          r={normalizedRadius}
+          strokeWidth={strokeWidth}
+        />
+        {safeValue >= 0 && (
           <circle
-            className="stroke-bg-soft-200"
+            className="stroke-primary-base transition-all duration-300 ease-out"
             cx={radius}
             cy={radius}
             fill="none"
             r={normalizedRadius}
+            strokeDasharray={`${circumference} ${circumference}`}
+            strokeDashoffset={offset}
             strokeWidth={strokeWidth}
           />
-          {safeValue >= 0 && (
-            <circle
-              className="stroke-primary-base transition-all duration-300 ease-out"
-              cx={radius}
-              cy={radius}
-              fill="none"
-              r={normalizedRadius}
-              strokeDasharray={`${circumference} ${circumference}`}
-              strokeDashoffset={offset}
-              strokeWidth={strokeWidth}
-            />
-          )}
-        </svg>
-        {children && (
-          <div
-            className={text({
-              class:
-                "absolute inset-0 flex items-center justify-center text-center",
-            })}
-          >
-            {children}
-          </div>
         )}
-      </div>
-    );
-  },
-);
+      </svg>
+      {children && (
+        <div
+          className={text({
+            class:
+              "absolute inset-0 flex items-center justify-center text-center",
+          })}
+        >
+          {children}
+        </div>
+      )}
+    </div>
+  );
+};
 ProgressCircleRoot.displayName = "ProgressCircleRoot";
 
 export { ProgressCircleRoot as Root };

@@ -1,20 +1,20 @@
-import { z } from "zod";
 import { redis } from "@repo/database/redis";
+import { z } from "zod";
 
-export interface RateLimitConfig {
+export type RateLimitConfig = {
   windowMs: number;
   maxRequests: number;
   keyPrefix: string;
-}
+};
 
-export interface RateLimitResult {
+export type RateLimitResult = {
   totalRequests: number;
   remainingRequests: number;
   resetTimeMs: number;
   retryAfterSeconds: number;
   windowMs: number;
   isLimitExceeded: boolean;
-}
+};
 
 export const rateLimitConfigSchema = z.object({
   windowMs: z.number().positive(),
@@ -34,7 +34,7 @@ function getClientIP(headers: Headers | undefined): string {
 export class RateLimitService {
   async checkRateLimit(
     identifier: string,
-    config: RateLimitConfig,
+    config: RateLimitConfig
   ): Promise<RateLimitResult> {
     const now = Date.now();
     const window = Math.floor(now / config.windowMs);
@@ -63,7 +63,7 @@ export class RateLimitService {
 
   async checkIPRateLimit(
     headers: Headers | undefined,
-    config: RateLimitConfig,
+    config: RateLimitConfig
   ): Promise<RateLimitResult> {
     const clientIP = getClientIP(headers);
     const identifier = `ip:${clientIP}`;

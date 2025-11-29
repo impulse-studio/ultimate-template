@@ -1,10 +1,10 @@
 "use client";
 
+import { env } from "@repo/env";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useState } from "react";
 import { createQueryClient } from "@/orpc/query/client";
-import { env } from "@repo/env";
 
 export function ORPCQueryClientProvider({
   children,

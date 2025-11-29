@@ -4,7 +4,7 @@
 
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { RiAddLine, RiSubtractLine } from "@remixicon/react";
-import * as React from "react";
+import type * as React from "react";
 
 import { cn } from "@/utils/cn";
 import type { PolymorphicComponentProps } from "@/utils/polymorphic";
@@ -18,10 +18,13 @@ const ACCORDION_CONTENT_NAME = "AccordionContent";
 const AccordionRoot = AccordionPrimitive.Root;
 const AccordionHeader = AccordionPrimitive.Header;
 
-const AccordionItem = React.forwardRef<
-  React.ComponentRef<typeof AccordionPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
->(({ className, ...rest }, forwardedRef) => {
+const AccordionItem = ({
+  className,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item> & {
+  ref?: React.Ref<React.ComponentRef<typeof AccordionPrimitive.Item> | null>;
+}) => {
   return (
     <AccordionPrimitive.Item
       className={cn(
@@ -35,19 +38,23 @@ const AccordionItem = React.forwardRef<
         "has-[:focus-visible]:bg-bg-weak-50 has-[:focus-visible]:ring-transparent",
         // open
         "data-[state=open]:bg-bg-weak-50 data-[state=open]:ring-transparent",
-        className,
+        className
       )}
       ref={forwardedRef}
       {...rest}
     />
   );
-});
+};
 AccordionItem.displayName = ACCORDION_ITEM_NAME;
 
-const AccordionTrigger = React.forwardRef<
-  React.ComponentRef<typeof AccordionPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
->(({ children, className, ...rest }, forwardedRef) => {
+const AccordionTrigger = ({
+  children,
+  className,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> & {
+  ref?: React.Ref<React.ComponentRef<typeof AccordionPrimitive.Trigger> | null>;
+}) => {
   return (
     <AccordionPrimitive.Trigger
       className={cn(
@@ -57,7 +64,7 @@ const AccordionTrigger = React.forwardRef<
         "-m-3.5 p-3.5 outline-none",
         // focus
         "focus:outline-none",
-        className,
+        className
       )}
       ref={forwardedRef}
       {...rest}
@@ -65,7 +72,7 @@ const AccordionTrigger = React.forwardRef<
       {children}
     </AccordionPrimitive.Trigger>
   );
-});
+};
 AccordionTrigger.displayName = ACCORDION_TRIGGER_NAME;
 
 function AccordionIcon<T extends React.ElementType>({
@@ -106,7 +113,7 @@ function AccordionArrow({
           "group-hover/accordion:text-text-sub-600",
           // open
           "group-data-[state=open]/accordion:hidden",
-          className,
+          className
         )}
         {...rest}
       />
@@ -115,7 +122,7 @@ function AccordionArrow({
           "size-5 text-text-sub-600",
           // close
           "hidden group-data-[state=open]/accordion:block",
-          className,
+          className
         )}
         {...rest}
       />
@@ -124,24 +131,26 @@ function AccordionArrow({
 }
 AccordionArrow.displayName = ACCORDION_ARROW_NAME;
 
-const AccordionContent = React.forwardRef<
-  React.ComponentRef<typeof AccordionPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
->(({ children, className, ...rest }, forwardedRef) => {
-  return (
-    <AccordionPrimitive.Content
-      className="overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
-      ref={forwardedRef}
-      {...rest}
+const AccordionContent = ({
+  children,
+  className,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content> & {
+  ref?: React.Ref<React.ComponentRef<typeof AccordionPrimitive.Content> | null>;
+}) => (
+  <AccordionPrimitive.Content
+    className="overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+    ref={forwardedRef}
+    {...rest}
+  >
+    <div
+      className={cn("pt-1.5 text-paragraph-sm text-text-sub-600", className)}
     >
-      <div
-        className={cn("pt-1.5 text-paragraph-sm text-text-sub-600", className)}
-      >
-        {children}
-      </div>
-    </AccordionPrimitive.Content>
-  );
-});
+      {children}
+    </div>
+  </AccordionPrimitive.Content>
+);
 AccordionContent.displayName = ACCORDION_CONTENT_NAME;
 
 export {

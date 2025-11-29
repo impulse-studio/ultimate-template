@@ -43,9 +43,9 @@ type Action =
       notificationId?: NotificationPropsWithId["id"];
     };
 
-interface State {
+type State = {
   notifications: NotificationPropsWithId[];
-}
+};
 
 const notificationTimeouts = new Map<string, ReturnType<typeof setTimeout>>();
 
@@ -72,7 +72,7 @@ export const reducer = (state: State, action: Action): State => {
         ...state,
         notifications: [action.notification, ...state.notifications].slice(
           0,
-          NOTIFICATION_LIMIT,
+          NOTIFICATION_LIMIT
         ),
       };
 
@@ -80,9 +80,7 @@ export const reducer = (state: State, action: Action): State => {
       return {
         ...state,
         notifications: state.notifications.map((t) =>
-          t.id === action.notification.id
-            ? { ...t, ...action.notification }
-            : t,
+          t.id === action.notification.id ? { ...t, ...action.notification } : t
         ),
       };
 
@@ -105,7 +103,7 @@ export const reducer = (state: State, action: Action): State => {
                 ...t,
                 open: false,
               }
-            : t,
+            : t
         ),
       };
     }
@@ -119,7 +117,7 @@ export const reducer = (state: State, action: Action): State => {
       return {
         ...state,
         notifications: state.notifications.filter(
-          (t) => t.id !== action.notificationId,
+          (t) => t.id !== action.notificationId
         ),
       };
     default:
@@ -134,7 +132,7 @@ let memoryState: State = { notifications: [] };
 function dispatch(action: Action) {
   if (action.type === "ADD_NOTIFICATION") {
     const notificationExists = memoryState.notifications.some(
-      (t) => t.id === action.notification.id,
+      (t) => t.id === action.notification.id
     );
     if (notificationExists) {
       return;

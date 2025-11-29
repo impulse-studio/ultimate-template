@@ -4,7 +4,7 @@
 
 import type { DialogProps } from "@radix-ui/react-dialog";
 import { Command } from "cmdk";
-import * as React from "react";
+import type * as React from "react";
 
 import * as Modal from "@/ui/modal";
 import { cn } from "@/utils/cn";
@@ -22,35 +22,36 @@ const CommandDialog = ({
 }: DialogProps & {
   className?: string;
   overlayClassName?: string;
-}) => {
-  return (
-    <Modal.Root {...rest}>
-      <Modal.Content
+}) => (
+  <Modal.Root {...rest}>
+    <Modal.Content
+      className={cn(
+        "flex max-h-full max-w-[600px] flex-col overflow-hidden rounded-2xl",
+        className
+      )}
+      overlayClassName={cn("justify-start pt-20", overlayClassName)}
+      showClose={false}
+    >
+      <Command
         className={cn(
-          "flex max-h-full max-w-[600px] flex-col overflow-hidden rounded-2xl",
-          className,
+          "divide-y divide-stroke-soft-200",
+          "grid min-h-0 auto-cols-auto grid-flow-row",
+          "[&>[cmdk-label]+*]:!border-t-0"
         )}
-        overlayClassName={cn("justify-start pt-20", overlayClassName)}
-        showClose={false}
       >
-        <Command
-          className={cn(
-            "divide-y divide-stroke-soft-200",
-            "grid min-h-0 auto-cols-auto grid-flow-row",
-            "[&>[cmdk-label]+*]:!border-t-0",
-          )}
-        >
-          {children}
-        </Command>
-      </Modal.Content>
-    </Modal.Root>
-  );
-};
+        {children}
+      </Command>
+    </Modal.Content>
+  </Modal.Root>
+);
 
-const CommandInput = React.forwardRef<
-  React.ComponentRef<typeof Command.Input>,
-  React.ComponentPropsWithoutRef<typeof Command.Input>
->(({ className, ...rest }, forwardedRef) => {
+const CommandInput = ({
+  className,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof Command.Input> & {
+  ref?: React.Ref<React.ComponentRef<typeof Command.Input> | null>;
+}) => {
   return (
     <Command.Input
       className={cn(
@@ -64,38 +65,42 @@ const CommandInput = React.forwardRef<
         "group-hover/cmd-input:placeholder:text-text-sub-600",
         // focus
         "focus:outline-none",
-        className,
+        className
       )}
       ref={forwardedRef}
       {...rest}
     />
   );
-});
+};
 CommandInput.displayName = "CommandInput";
 
-const CommandList = React.forwardRef<
-  React.ComponentRef<typeof Command.List>,
-  React.ComponentPropsWithoutRef<typeof Command.List>
->(({ className, ...rest }, forwardedRef) => {
-  return (
-    <Command.List
-      className={cn(
-        "flex max-h-min min-h-0 flex-1 flex-col",
-        "[&>[cmdk-list-sizer]]:divide-y [&>[cmdk-list-sizer]]:divide-stroke-soft-200",
-        "[&>[cmdk-list-sizer]]:overflow-auto",
-        className,
-      )}
-      ref={forwardedRef}
-      {...rest}
-    />
-  );
-});
+const CommandList = ({
+  className,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof Command.List> & {
+  ref?: React.Ref<React.ComponentRef<typeof Command.List> | null>;
+}) => (
+  <Command.List
+    className={cn(
+      "flex max-h-min min-h-0 flex-1 flex-col",
+      "[&>[cmdk-list-sizer]]:divide-y [&>[cmdk-list-sizer]]:divide-stroke-soft-200",
+      "[&>[cmdk-list-sizer]]:overflow-auto",
+      className
+    )}
+    ref={forwardedRef}
+    {...rest}
+  />
+);
 CommandList.displayName = "CommandList";
 
-const CommandGroup = React.forwardRef<
-  React.ComponentRef<typeof Command.Group>,
-  React.ComponentPropsWithoutRef<typeof Command.Group>
->(({ className, ...rest }, forwardedRef) => {
+const CommandGroup = ({
+  className,
+  ref: forwardedRef,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof Command.Group> & {
+  ref?: React.Ref<React.ComponentRef<typeof Command.Group> | null>;
+}) => {
   return (
     <Command.Group
       className={cn(
@@ -103,13 +108,13 @@ const CommandGroup = React.forwardRef<
         // heading
         "[&>[cmdk-group-heading]]:text-label-xs [&>[cmdk-group-heading]]:text-text-sub-600",
         "[&>[cmdk-group-heading]]:mb-2 [&>[cmdk-group-heading]]:px-3 [&>[cmdk-group-heading]]:pt-1",
-        className,
+        className
       )}
       ref={forwardedRef}
       {...rest}
     />
   );
-});
+};
 CommandGroup.displayName = "CommandGroup";
 
 const commandItemVariants = tv({
@@ -134,18 +139,20 @@ const commandItemVariants = tv({
 type CommandItemProps = VariantProps<typeof commandItemVariants> &
   React.ComponentPropsWithoutRef<typeof Command.Item>;
 
-const CommandItem = React.forwardRef<
-  React.ComponentRef<typeof Command.Item>,
-  CommandItemProps
->(({ className, size, ...rest }, forwardedRef) => {
-  return (
-    <Command.Item
-      className={commandItemVariants({ size, class: className })}
-      ref={forwardedRef}
-      {...rest}
-    />
-  );
-});
+const CommandItem = ({
+  className,
+  size,
+  ref: forwardedRef,
+  ...rest
+}: CommandItemProps & {
+  ref?: React.Ref<React.ComponentRef<typeof Command.Item> | null>;
+}) => (
+  <Command.Item
+    className={commandItemVariants({ size, class: className })}
+    ref={forwardedRef}
+    {...rest}
+  />
+);
 CommandItem.displayName = "CommandItem";
 
 function CommandItemIcon<T extends React.ElementType>({
@@ -171,7 +178,7 @@ function CommandFooter({
     <div
       className={cn(
         "flex h-12 items-center justify-between gap-3 px-5",
-        className,
+        className
       )}
       {...rest}
     />
@@ -186,7 +193,7 @@ function CommandFooterKeyBox({
     <div
       className={cn(
         "flex size-5 shrink-0 items-center justify-center rounded bg-bg-weak-50 text-text-sub-600 ring-1 ring-stroke-soft-200 ring-inset",
-        className,
+        className
       )}
       {...rest}
     />

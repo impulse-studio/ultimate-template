@@ -1,12 +1,11 @@
 import { os } from "@orpc/server";
-import z from "zod";
-import type { UserRole } from "@repo/database";
-import type { Database } from "@repo/database";
+import type { Database, UserRole } from "@repo/database";
 import type { AuthSession } from "@repo/database/auth/server";
+import z from "zod";
 
-export interface Meta {
+export type Meta = {
   roles?: UserRole[];
-}
+};
 
 export const base = os
   .$context<{

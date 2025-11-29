@@ -1,0 +1,64 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "extends": ["ultracite/core", "ultracite/react", "ultracite/next"],
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "css": {
+    "parser": {
+      "cssModules": true,
+      "tailwindDirectives": true
+    }
+  },
+  "linter": {
+    "rules": {
+      "style": {
+        "useConsistentTypeDefinitions": "off"
+      },
+      "performance": {
+        "noBarrelFile": "off"
+      },
+      "nursery": {
+        "noLeakedRender": "off",
+        "noReactForwardRef": "off"
+      },
+      "a11y": {
+        "useSemanticElements": "off",
+        "noStaticElementInteractions": "off",
+        "noNoninteractiveElementInteractions": "off",
+        "noSvgWithoutTitle": "off",
+        "useButtonType": "off",
+        "useFocusableInteractive": "off",
+        "useAltText": "off",
+        "noRedundantAlt": "off",
+        "useAriaPropsForRole": "off"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["packages/ui/**"],
+      "linter": {
+        "rules": {
+          "performance": {
+            "noNamespaceImport": "off",
+            "noImgElement": "off"
+          },
+          "correctness": {
+            "useImageSize": "off"
+          }
+        }
+      }
+    }
+  ],
+  "files": {
+    "includes": [
+      "**/*",
+      "!packages/ui/dist",
+      "!packages/env/dist",
+      "!apps/web/.next"
+    ]
+  }
+}
