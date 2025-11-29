@@ -3,12 +3,29 @@
  * Runs automatically via postinstall.
  * Cross-platform (works on Windows, macOS, Linux).
  *
- * Symlinks are created even if source doesn't exist yet (dangling symlinks).
- * This allows `pnpm install` → `pnpm env:pull` workflow to work correctly.
+ * Symlinks are only created in local dev (skipped in CI/Vercel).
  */
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+
+// Skip in CI/deployment environments
+const isCI =
+  process.env.CI ||
+  process.env.VERCEL ||
+  process.env.NETLIFY ||
+  process.env.RAILWAY_ENVIRONMENT ||
+  process.env.RENDER ||
+  process.env.FLY_APP_NAME ||
+  process.env.HEROKU ||
+  process.env.AWS_EXECUTION_ENV ||
+  process.env.GOOGLE_CLOUD_PROJECT ||
+  process.env.AZURE_FUNCTIONS_ENVIRONMENT;
+
+if (isCI) {
+  console.log("○ Skipping env symlinks (CI/deployment detected)");
+  process.exit(0);
+}
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const webDir = path.resolve(__dirname, "..");
@@ -29,7 +46,7 @@ for (const file of envFiles) {
     // Ignore if doesn't exist
   }
 
-  // Create relative symlink (works even if source doesn't exist yet)
+  // Create relative symlink (works even if source doesn't exist yet for pnpm install → pnpm env:pull workflow)
   try {
     fs.symlinkSync(relativePath, target, "file");
     console.log(`✓ Linked ${file} → ${relativePath}`);
